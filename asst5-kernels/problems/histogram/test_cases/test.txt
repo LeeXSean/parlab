@@ -1,0 +1,1 @@
+length: 1048576; num_channels: 512; num_bins: 256; seed: 1001

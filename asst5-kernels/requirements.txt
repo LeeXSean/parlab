@@ -1,0 +1,6 @@
+numpy
+torch
+setuptools
+ninja
+triton
+tilelang

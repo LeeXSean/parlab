@@ -1,0 +1,3 @@
+batch_size: 1; num_heads: 64; seq_len: 1024; head_dim: 128; seed: 1118
+batch_size: 2; num_heads: 64; seq_len: 4096; head_dim: 128; seed: 1118
+batch_size: 4; num_heads: 64; seq_len: 8192; head_dim: 128; seed: 1118

@@ -1,0 +1,8 @@
+submission.*
+target/
+scratch.md
+
+dump/
+__pycache__/
+setup.sh
+profile_data/

@@ -1,0 +1,1 @@
+batch_size: 256; in_features: 2048; hidden_size: 4096; seed: 8846; seq: 64

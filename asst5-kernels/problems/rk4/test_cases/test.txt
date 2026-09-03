@@ -1,0 +1,1 @@
+grid_size: 600; n_steps: 10; seed: 9231
