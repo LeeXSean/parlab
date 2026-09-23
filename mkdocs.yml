@@ -1,0 +1,70 @@
+site_name: Parallel Lab Notes
+site_author: Xiang Li
+site_description: Local implementations, measurements, and performance analysis for CS149 and 15-418.
+site_url: https://leexsean.github.io/parlab/
+copyright: © 2026 Xiang Li
+repo_url: https://github.com/LeeXSean/parlab
+repo_name: LeeXSean/parlab
+edit_uri: ""
+exclude_docs: |
+  overrides/
+  assets/benchmarks/*.log
+  assets/benchmarks/*.s
+
+theme:
+  name: material
+  language: en
+  font: false
+  custom_dir: docs/overrides
+  favicon: assets/favicon.svg
+  features:
+    - content.code.copy
+    - navigation.sections
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+plugins:
+  - search
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: ¶
+      toc_depth: 3
+  - pymdownx.highlight:
+      pygments_lang_class: true
+  - pymdownx.superfences
+  - pymdownx.details
+extra_css:
+  - stylesheets/extra.css
+nav:
+  - Home: index.md
+  - Assignments:
+      - A1 · CPU parallelism:
+          - Overview: asst1/index.md
+          - P1 · CPU threads: asst1/p1.md
+          - P2 · SIMD intrinsics: asst1/p2.md
+          - P3 · ISPC: asst1/p3.md
+          - P4 · Iterative sqrt: asst1/p4.md
+          - P5 · SAXPY: asst1/p5.md
+          - P6 · K-means: asst1/p6.md
+          - Measurements: asst1/measurements.md
+      - A2 · Task system: asst2/index.md
+      - A3 · CUDA renderer: asst3/index.md
+      - A4 · MPI wire routing: cmu-asst4/index.md
+      - A5 · RK4 kernel: asst5/index.md

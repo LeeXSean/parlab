@@ -9,6 +9,7 @@
 using namespace ispc;
 
 extern void sqrtSerial(int N, float startGuess, float* values, float* output);
+extern void sqrtAVX2(int N, float startGuess, float* values, float* output);
 
 static void verifyResult(int N, float* result, float* gold) {
     for (int i=0; i<N; i++) {
@@ -27,14 +28,23 @@ int main() {
     float* output = new float[N];
     float* gold = new float[N];
 
-    for (unsigned int i=0; i<N; i++)
+    for (unsigned int i=0; i<N; i+=8)
     {
         // TODO: CS149 students.  Attempt to change the values in the
         // array here to meet the instructions in the handout: we want
         // to you generate best and worse-case speedups
         
         // starter code populates array with random input values
-        values[i] = .001f + 2.998f * static_cast<float>(rand()) / RAND_MAX;
+        values[i] = 2.999f;
+        values[i+1] = 1.f;
+        values[i+2] = 1.f;
+        values[i+3] = 1.f;
+        values[i+4] = 1.f;
+        values[i+5] = 1.f;
+        values[i+6] = 1.f;
+        values[i+7] = 1.f;
+        /* Best */
+        // values[All] = 2.999f;
     }
 
     // generate a gold version to check results
@@ -77,6 +87,22 @@ int main() {
     for (unsigned int i = 0; i < N; ++i)
         output[i] = 0;
 
+    double minAVX2 = 1e30;
+    for (int i = 0; i < 3; ++i) {
+        double startTime = CycleTimer::currentSeconds();
+        sqrtAVX2(N, initialGuess, values, output);
+        double endTime = CycleTimer::currentSeconds();
+        minAVX2 = std::min(minAVX2, endTime - startTime);
+    }
+
+    printf("[sqrt AVX2]:\t\t[%.3f] ms\n", minAVX2 * 1000);
+
+    verifyResult(N, output, gold);
+
+    // Clear out the buffer
+    for (unsigned int i = 0; i < N; ++i)
+        output[i] = 0;
+    
     //
     // Tasking version of the ISPC code
     //

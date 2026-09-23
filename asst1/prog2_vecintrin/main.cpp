@@ -181,36 +181,37 @@ void absVector(float* values, float* output, int N) {
   __cs149_vec_float x;
   __cs149_vec_float result;
   __cs149_vec_float zero = _cs149_vset_float(0.f);
-  __cs149_mask maskAll, maskIsNegative, maskIsNotNegative;
+  __cs149_mask maskEff, maskIsNegative, maskIsNotNegative;
 
 //  Note: Take a careful look at this loop indexing.  This example
 //  code is not guaranteed to work when (N % VECTOR_WIDTH) != 0.
 //  Why is that the case?
   for (int i=0; i<N; i+=VECTOR_WIDTH) {
 
-    // All ones
-    maskAll = _cs149_init_ones();
+    // All effective ones
+    maskEff = _cs149_init_ones(N-i);
 
     // All zeros
     maskIsNegative = _cs149_init_ones(0);
 
     // Load vector of values from contiguous memory addresses
-    _cs149_vload_float(x, values+i, maskAll);               // x = values[i];
+    _cs149_vload_float(x, values+i, maskEff);               // x = values[i];
 
     // Set mask according to predicate
-    _cs149_vlt_float(maskIsNegative, x, zero, maskAll);     // if (x < 0) {
+    _cs149_vlt_float(maskIsNegative, x, zero, maskEff);     // if (x < 0) {
 
     // Execute instruction using mask ("if" clause)
     _cs149_vsub_float(result, zero, x, maskIsNegative);      //   output[i] = -x;
 
     // Inverse maskIsNegative to generate "else" mask
     maskIsNotNegative = _cs149_mask_not(maskIsNegative);     // } else {
+    maskIsNotNegative = _cs149_mask_and(maskEff, maskIsNotNegative);
 
     // Execute instruction ("else" clause)
     _cs149_vload_float(result, values+i, maskIsNotNegative); //   output[i] = x; }
 
     // Write results back to memory
-    _cs149_vstore_float(output+i, result, maskAll);
+    _cs149_vstore_float(output+i, result, maskEff);
   }
 }
 
@@ -249,7 +250,39 @@ void clampedExpVector(float* values, int* exponents, float* output, int N) {
   // Your solution should work for any value of
   // N and VECTOR_WIDTH, not just when VECTOR_WIDTH divides N
   //
-  
+  __cs149_vec_float x;
+  __cs149_vec_int y;
+  __cs149_vec_float result;
+  __cs149_vec_int zero = _cs149_vset_int(0);
+  __cs149_vec_int one = _cs149_vset_int(1);
+  __cs149_vec_float ninef = _cs149_vset_float(9.999999f);
+  __cs149_vec_int count;
+  __cs149_mask maskEff, maskIsEqual, maskIsNotEqual;
+
+  for (int i=0; i<N; i+=VECTOR_WIDTH) {
+    maskEff = _cs149_init_ones(N-i);
+    maskIsEqual = _cs149_init_ones(0);
+    _cs149_vload_float(x, values+i, maskEff);
+    _cs149_vload_int(y, exponents+i, maskEff);
+    _cs149_veq_int(maskIsEqual, y, zero, maskEff);
+
+    _cs149_vset_float(result, 1.f, maskIsEqual);
+
+    maskIsNotEqual = _cs149_mask_not(maskIsEqual);
+    maskIsNotEqual = _cs149_mask_and(maskIsNotEqual, maskEff);
+    _cs149_vsub_int(count, y, one, maskIsNotEqual);
+    _cs149_vmove_float(result, x, maskIsNotEqual);
+    _cs149_vgt_int(maskIsNotEqual, count, zero, maskIsNotEqual);
+    while (_cs149_cntbits(maskIsNotEqual)) {
+      _cs149_vmult_float(result, result, x, maskIsNotEqual);
+      _cs149_vsub_int(count, count, one, maskIsNotEqual);
+      _cs149_vgt_int(maskIsNotEqual, count, zero, maskIsNotEqual);
+    }
+
+    _cs149_vgt_float(maskIsNotEqual, result, ninef, maskEff);
+    _cs149_vset_float(result, 9.999999f, maskIsNotEqual);
+    _cs149_vstore_float(output+i, result, maskEff);
+  }
 }
 
 // returns the sum of all elements in values
@@ -266,15 +299,33 @@ float arraySumSerial(float* values, int N) {
 // You can assume N is a multiple of VECTOR_WIDTH
 // You can assume VECTOR_WIDTH is a power of 2
 float arraySumVector(float* values, int N) {
-  
-  //
-  // CS149 STUDENTS TODO: Implement your vectorized version of arraySumSerial here
-  //
-  
-  for (int i=0; i<N; i+=VECTOR_WIDTH) {
+  __cs149_vec_float x;
+  __cs149_vec_float result;
+  // The simulator's interleave needs distinct source and destination vectors.
+  __cs149_vec_float temp;
+  __cs149_mask maskAll, maskEff, maskNotEff;
+  float ans = 0.f;
 
+  maskAll = _cs149_init_ones();
+  maskEff = _cs149_init_ones(VECTOR_WIDTH/2);
+  maskNotEff = _cs149_mask_not(maskEff);
+  
+  _cs149_vload_float(x, values, maskAll);
+  _cs149_hadd_float(temp, x);
+  _cs149_interleave_float(x, temp);
+  _cs149_vmove_float(result, x, maskEff);
+
+  for (int i=VECTOR_WIDTH; i<N; i+=VECTOR_WIDTH) {
+    _cs149_vload_float(x, values+i, maskAll);
+    _cs149_hadd_float(temp, x);
+    _cs149_interleave_float(x, temp);
+    _cs149_vmove_float(result, x, maskNotEff);
+    _cs149_hadd_float(temp, result);
+    _cs149_interleave_float(result, temp);
+  }
+  for (int i=0; i<VECTOR_WIDTH/2; i++) {
+    ans += result.value[i];
   }
 
-  return 0.0;
+  return ans;
 }
-
