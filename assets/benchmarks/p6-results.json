@@ -1,0 +1,20 @@
+{
+  "times_ms": {
+    "serial": [
+      5773.56,
+      5842.823,
+      5813.935
+    ],
+    "parallel": [
+      2544.944,
+      2528.932,
+      2581.971
+    ]
+  },
+  "median_ms": {
+    "serial": 5813.935,
+    "parallel": 2544.944
+  },
+  "speedup": 2.2845040991078784,
+  "state_sha256": "ed29c924f9bfde51f5d997fd566c0bfeab4e5df0fb29d56e619d8b17becdc950"
+}

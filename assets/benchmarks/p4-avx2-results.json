@@ -1,0 +1,356 @@
+{
+  "cpu": "Intel Core i9-13900H",
+  "compilers": {
+    "cpp": "GCC 13.3.0",
+    "cpp_flags": "-O3 -m64 -march=native -Wall",
+    "ispc": "1.28.1",
+    "ispc_flags": "-O3 --target=avx2-i32x8 --arch=x86-64 --pic"
+  },
+  "N": 20000000,
+  "initial_guess": 1,
+  "method": {
+    "process_runs": 3,
+    "repetitions_per_kernel": 3,
+    "within_process_statistic": "minimum",
+    "between_process_statistic": "median",
+    "kernel_order": [
+      "serial",
+      "ISPC",
+      "AVX2"
+    ],
+    "affinity": "CPU 0, one P-core hardware thread",
+    "timed_scope": "kernel only; input generation and verification excluded",
+    "verification": "Every output must be finite and within 1e-4 absolute error of sqrt(input).",
+    "temporary_driver_changes": "Select the input case outside timing; make verification reject non-finite results and exit on failure; omit task kernel in the pinned single-core comparison. Kernel source files are unchanged."
+  },
+  "inputs": {
+    "random": ".001f + 2.998f * static_cast<float>(rand()) / RAND_MAX; default seed 1",
+    "all-2.999": "2.999f",
+    "one-slow-seven-fast": "2.999f at i % 8 == 0; 1.f elsewhere",
+    "all-1": "1.f"
+  },
+  "source_sha256": {
+    "asst1/prog4_sqrt/main.cpp": "3adc61db87d4fa559622e02c38b44b6700bda501d7e52577bc4b60f32198abb8",
+    "asst1/prog4_sqrt/sqrtAVX2.cpp": "8b545ea23de0b10449c3433c8543f10047ff8fd1772a674baa6d17c541f96ffe",
+    "asst1/prog4_sqrt/sqrtSerial.cpp": "08408c32b23ef1ed112f8804aeb1e2cda2c0c71dbae507fc1449407f69315c19",
+    "asst1/prog4_sqrt/sqrt.ispc": "7393bd7f2f36ba83bdbce00df15b191c14b09b9fd65b61a3d7825e1e33becd54",
+    "asst1/prog4_sqrt/Makefile": "5413df8b2f63f86678c03533b96f7a74a4be2be46a42caa4b7e3ee5bfaaa4fcd"
+  },
+  "results": [
+    {
+      "input": "random",
+      "runs": [
+        {
+          "run": 1,
+          "times_ms": {
+            "sqrt serial": 782.01,
+            "sqrt ispc": 196.732,
+            "sqrt AVX2": 132.197
+          }
+        },
+        {
+          "run": 2,
+          "times_ms": {
+            "sqrt serial": 781.017,
+            "sqrt ispc": 197.448,
+            "sqrt AVX2": 132.162
+          }
+        },
+        {
+          "run": 3,
+          "times_ms": {
+            "sqrt serial": 781.864,
+            "sqrt ispc": 197.891,
+            "sqrt AVX2": 131.991
+          }
+        }
+      ],
+      "median_ms": {
+        "sqrt serial": 781.864,
+        "sqrt ispc": 197.448,
+        "sqrt AVX2": 132.162
+      },
+      "ispc_over_avx2": 1.493984655195896,
+      "checks_passed": true
+    },
+    {
+      "input": "all-2.999",
+      "runs": [
+        {
+          "run": 1,
+          "times_ms": {
+            "sqrt serial": 1448.323,
+            "sqrt ispc": 451.426,
+            "sqrt AVX2": 153.689
+          }
+        },
+        {
+          "run": 2,
+          "times_ms": {
+            "sqrt serial": 1449.437,
+            "sqrt ispc": 385.246,
+            "sqrt AVX2": 153.667
+          }
+        },
+        {
+          "run": 3,
+          "times_ms": {
+            "sqrt serial": 1448.494,
+            "sqrt ispc": 318.304,
+            "sqrt AVX2": 153.767
+          }
+        }
+      ],
+      "median_ms": {
+        "sqrt serial": 1448.494,
+        "sqrt ispc": 385.246,
+        "sqrt AVX2": 153.689
+      },
+      "ispc_over_avx2": 2.506659552733117,
+      "checks_passed": true
+    },
+    {
+      "input": "one-slow-seven-fast",
+      "runs": [
+        {
+          "run": 1,
+          "times_ms": {
+            "sqrt serial": 209.843,
+            "sqrt ispc": 318.797,
+            "sqrt AVX2": 153.57
+          }
+        },
+        {
+          "run": 2,
+          "times_ms": {
+            "sqrt serial": 208.139,
+            "sqrt ispc": 319.275,
+            "sqrt AVX2": 153.769
+          }
+        },
+        {
+          "run": 3,
+          "times_ms": {
+            "sqrt serial": 204.513,
+            "sqrt ispc": 318.68,
+            "sqrt AVX2": 153.611
+          }
+        }
+      ],
+      "median_ms": {
+        "sqrt serial": 208.139,
+        "sqrt ispc": 318.797,
+        "sqrt AVX2": 153.611
+      },
+      "ispc_over_avx2": 2.0753526765661316,
+      "checks_passed": true
+    },
+    {
+      "input": "all-1",
+      "runs": [
+        {
+          "run": 1,
+          "times_ms": {
+            "sqrt serial": 11.17,
+            "sqrt ispc": 6.776,
+            "sqrt AVX2": 6.886
+          }
+        },
+        {
+          "run": 2,
+          "times_ms": {
+            "sqrt serial": 11.178,
+            "sqrt ispc": 6.901,
+            "sqrt AVX2": 6.986
+          }
+        },
+        {
+          "run": 3,
+          "times_ms": {
+            "sqrt serial": 11.195,
+            "sqrt ispc": 6.967,
+            "sqrt AVX2": 6.983
+          }
+        }
+      ],
+      "median_ms": {
+        "sqrt serial": 11.178,
+        "sqrt ispc": 6.901,
+        "sqrt AVX2": 6.983
+      },
+      "ispc_over_avx2": 0.988257196047544,
+      "checks_passed": true
+    }
+  ],
+  "diagnostic_default_scheduling": {
+    "included_in_notes_table": false,
+    "kernel_order": [
+      "serial",
+      "ISPC",
+      "AVX2",
+      "task ISPC"
+    ],
+    "results": [
+      {
+        "input": "random",
+        "runs": [
+          {
+            "run": 1,
+            "times_ms": {
+              "sqrt serial": 785.781,
+              "sqrt ispc": 196.063,
+              "sqrt AVX2": 131.651,
+              "sqrt task ispc": 14.756
+            }
+          },
+          {
+            "run": 2,
+            "times_ms": {
+              "sqrt serial": 785.231,
+              "sqrt ispc": 196.225,
+              "sqrt AVX2": 132.001,
+              "sqrt task ispc": 13.693
+            }
+          },
+          {
+            "run": 3,
+            "times_ms": {
+              "sqrt serial": 785.212,
+              "sqrt ispc": 196.116,
+              "sqrt AVX2": 131.984,
+              "sqrt task ispc": 14.403
+            }
+          }
+        ],
+        "median_ms": {
+          "sqrt serial": 785.231,
+          "sqrt ispc": 196.116,
+          "sqrt AVX2": 131.984,
+          "sqrt task ispc": 14.403
+        },
+        "ispc_over_avx2": 1.4859073827130562,
+        "checks_passed": true
+      },
+      {
+        "input": "all-2.999",
+        "runs": [
+          {
+            "run": 1,
+            "times_ms": {
+              "sqrt serial": 1447.871,
+              "sqrt ispc": 444.096,
+              "sqrt AVX2": 152.499,
+              "sqrt task ispc": 26.3
+            }
+          },
+          {
+            "run": 2,
+            "times_ms": {
+              "sqrt serial": 1444.482,
+              "sqrt ispc": 445.263,
+              "sqrt AVX2": 152.609,
+              "sqrt task ispc": 28.488
+            }
+          },
+          {
+            "run": 3,
+            "times_ms": {
+              "sqrt serial": 1442.803,
+              "sqrt ispc": 320.694,
+              "sqrt AVX2": 152.586,
+              "sqrt task ispc": 31.763
+            }
+          }
+        ],
+        "median_ms": {
+          "sqrt serial": 1444.482,
+          "sqrt ispc": 444.096,
+          "sqrt AVX2": 152.586,
+          "sqrt task ispc": 28.488
+        },
+        "ispc_over_avx2": 2.910463607408281,
+        "checks_passed": true
+      },
+      {
+        "input": "one-slow-seven-fast",
+        "runs": [
+          {
+            "run": 1,
+            "times_ms": {
+              "sqrt serial": 205.423,
+              "sqrt ispc": 315.332,
+              "sqrt AVX2": 152.593,
+              "sqrt task ispc": 28.292
+            }
+          },
+          {
+            "run": 2,
+            "times_ms": {
+              "sqrt serial": 204.253,
+              "sqrt ispc": 316.18,
+              "sqrt AVX2": 152.708,
+              "sqrt task ispc": 28.459
+            }
+          },
+          {
+            "run": 3,
+            "times_ms": {
+              "sqrt serial": 207.519,
+              "sqrt ispc": 315.8,
+              "sqrt AVX2": 152.622,
+              "sqrt task ispc": 26.558
+            }
+          }
+        ],
+        "median_ms": {
+          "sqrt serial": 205.423,
+          "sqrt ispc": 315.8,
+          "sqrt AVX2": 152.622,
+          "sqrt task ispc": 28.292
+        },
+        "ispc_over_avx2": 2.0691643406586206,
+        "checks_passed": true
+      },
+      {
+        "input": "all-1",
+        "runs": [
+          {
+            "run": 1,
+            "times_ms": {
+              "sqrt serial": 11.098,
+              "sqrt ispc": 6.673,
+              "sqrt AVX2": 6.83,
+              "sqrt task ispc": 2.773
+            }
+          },
+          {
+            "run": 2,
+            "times_ms": {
+              "sqrt serial": 13.737,
+              "sqrt ispc": 7.572,
+              "sqrt AVX2": 6.948,
+              "sqrt task ispc": 2.848
+            }
+          },
+          {
+            "run": 3,
+            "times_ms": {
+              "sqrt serial": 11.242,
+              "sqrt ispc": 6.846,
+              "sqrt AVX2": 6.885,
+              "sqrt task ispc": 2.853
+            }
+          }
+        ],
+        "median_ms": {
+          "sqrt serial": 11.242,
+          "sqrt ispc": 6.846,
+          "sqrt AVX2": 6.885,
+          "sqrt task ispc": 2.848
+        },
+        "ispc_over_avx2": 0.9943355119825709,
+        "checks_passed": true
+      }
+    ]
+  }
+}

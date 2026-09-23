@@ -1,0 +1,118 @@
+{
+  "date": "2026-09-23",
+  "binary": "asst1/prog1_mandelbrot_threads/mandelbrot",
+  "method": "Three process runs per view and affinity, alternating order. Each driver reports the minimum of five internal repetitions. Speedup is the ratio of median times. Unchanged binary with worker timing output; pixel-by-pixel validation passed in every run.",
+  "cpu": "Intel Core i9-13900H",
+  "e_core_cpu_ids": "12-19",
+  "power": {
+    "ac_connected": true,
+    "platform_profile": "performance",
+    "governor": "powersave",
+    "energy_performance_preference": "balance_performance",
+    "turbo_enabled": true
+  },
+  "commands": [
+    "./mandelbrot --threads 8 --view 1",
+    "taskset -c 12-19 ./mandelbrot --threads 8 --view 1",
+    "./mandelbrot --threads 8 --view 2",
+    "taskset -c 12-19 ./mandelbrot --threads 8 --view 2"
+  ],
+  "results": [
+    {
+      "view": 1,
+      "affinity": "default",
+      "runs": [
+        {
+          "serial_ms": 343.34,
+          "parallel_ms": 58.876
+        },
+        {
+          "serial_ms": 343.321,
+          "parallel_ms": 58.922
+        },
+        {
+          "serial_ms": 343.281,
+          "parallel_ms": 59.137
+        }
+      ],
+      "median_ms": {
+        "serial": 343.321,
+        "parallel": 58.922
+      },
+      "speedup": 5.826703099012255,
+      "correct": true
+    },
+    {
+      "view": 1,
+      "affinity": "e_cores",
+      "runs": [
+        {
+          "serial_ms": 531.803,
+          "parallel_ms": 67.145
+        },
+        {
+          "serial_ms": 530.944,
+          "parallel_ms": 66.751
+        },
+        {
+          "serial_ms": 530.918,
+          "parallel_ms": 66.802
+        }
+      ],
+      "median_ms": {
+        "serial": 530.944,
+        "parallel": 66.802
+      },
+      "speedup": 7.948025508218316,
+      "correct": true
+    },
+    {
+      "view": 2,
+      "affinity": "default",
+      "runs": [
+        {
+          "serial_ms": 192.286,
+          "parallel_ms": 34.041
+        },
+        {
+          "serial_ms": 192.635,
+          "parallel_ms": 38.473
+        },
+        {
+          "serial_ms": 192.708,
+          "parallel_ms": 34.322
+        }
+      ],
+      "median_ms": {
+        "serial": 192.635,
+        "parallel": 34.322
+      },
+      "speedup": 5.612580851931705,
+      "correct": true
+    },
+    {
+      "view": 2,
+      "affinity": "e_cores",
+      "runs": [
+        {
+          "serial_ms": 316.804,
+          "parallel_ms": 40.027
+        },
+        {
+          "serial_ms": 316.788,
+          "parallel_ms": 40.039
+        },
+        {
+          "serial_ms": 318.944,
+          "parallel_ms": 40.531
+        }
+      ],
+      "median_ms": {
+        "serial": 316.804,
+        "parallel": 40.039
+      },
+      "speedup": 7.912385424211393,
+      "correct": true
+    }
+  ]
+}
