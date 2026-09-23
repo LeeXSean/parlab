@@ -591,6 +591,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="3. Extra credit: array sum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-accumulate-and-reduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Accumulate and reduce
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-simulator-limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Simulator limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -987,6 +1015,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="3. Extra credit: array sum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-accumulate-and-reduce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Accumulate and reduce
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-simulator-limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Simulator limitation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1117,10 +1173,13 @@ Exit             0 0 0 0
 </table>
 <p>A wider vector is more likely to contain a long-running lane. Finished lanes remain inactive while that lane continues, reducing utilization. More elements are processed per instruction, so total instruction count still falls.</p>
 <h2 id="3-extra-credit-array-sum">3. Extra credit: array sum<a class="headerlink" href="#3-extra-credit-array-sum" title="Permanent link">¶</a></h2>
-<p>The current <code>arraySumVector</code> fails for multiple chunks at widths 4, 8, and 16:</p>
+<p>Assume <code>N</code> is a multiple of <code>VECTOR_WIDTH</code>.</p>
+<h3 id="31-accumulate-and-reduce">3.1 Accumulate and reduce<a class="headerlink" href="#31-accumulate-and-reduce" title="Permanent link">¶</a></h3>
 <div class="language-cpp highlight"><pre><span></span><code><span class="kt">float</span><span class="w"> </span><span class="nf">arraySumVector</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">values</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">__cs149_vec_float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
 <span class="w">    </span><span class="n">__cs149_vec_float</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// The simulator's interleave needs distinct source and destination vectors.</span>
+<span class="w">    </span><span class="n">__cs149_vec_float</span><span class="w"> </span><span class="n">temp</span><span class="p">;</span>
 <span class="w">    </span><span class="n">__cs149_mask</span><span class="w"> </span><span class="n">maskAll</span><span class="p">,</span><span class="w"> </span><span class="n">maskEff</span><span class="p">,</span><span class="w"> </span><span class="n">maskNotEff</span><span class="p">;</span>
 <span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.f</span><span class="p">;</span>
 
@@ -1129,17 +1188,17 @@ Exit             0 0 0 0
 <span class="w">    </span><span class="n">maskNotEff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_cs149_mask_not</span><span class="p">(</span><span class="n">maskEff</span><span class="p">);</span>
 
 <span class="w">    </span><span class="n">_cs149_vload_float</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">,</span><span class="w"> </span><span class="n">maskAll</span><span class="p">);</span>
-<span class="w">    </span><span class="n">_cs149_hadd_float</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
-<span class="w">    </span><span class="n">_cs149_interleave_float</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_cs149_hadd_float</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_cs149_interleave_float</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">temp</span><span class="p">);</span>
 <span class="w">    </span><span class="n">_cs149_vmove_float</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">maskEff</span><span class="p">);</span>
 
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">VECTOR_WIDTH</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">+=</span><span class="n">VECTOR_WIDTH</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">_cs149_vload_float</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">maskAll</span><span class="p">);</span>
-<span class="w">        </span><span class="n">_cs149_hadd_float</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
-<span class="w">        </span><span class="n">_cs149_interleave_float</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="w">        </span><span class="n">_cs149_hadd_float</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="w">        </span><span class="n">_cs149_interleave_float</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">temp</span><span class="p">);</span>
 <span class="w">        </span><span class="n">_cs149_vmove_float</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">maskNotEff</span><span class="p">);</span>
-<span class="w">        </span><span class="n">_cs149_hadd_float</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span>
-<span class="w">        </span><span class="n">_cs149_interleave_float</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span>
+<span class="w">        </span><span class="n">_cs149_hadd_float</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span>
+<span class="w">        </span><span class="n">_cs149_interleave_float</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">temp</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">VECTOR_WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">ans</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
@@ -1148,8 +1207,11 @@ Exit             0 0 0 0
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ans</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>The intended accumulation keeps partial sums in the lower half of <code>result</code> and places new pair sums in the upper half. <code>hadd</code> and <code>interleave</code> combine them, then the final scalar loop sums the accumulated lanes.</p>
-<p>The in-place <code>interleave</code> overwrites lane 1 before reading it to fill lane 2. At width 4, pair sums <code>[a, a, b, b]</code> become <code>[a, b, b, b]</code> instead of <code>[a, b, a, b]</code>. The first chunk uses only the intact lower half; later chunks consume the damaged upper half. This extra credit remains pending.</p>
+<p>The lower half of <code>result</code> holds partial sums; the upper half receives the next chunk's pair sums. <code>hadd</code> combines adjacent lanes, and <code>interleave</code> packs the unique sums back into the lower half. The final scalar loop adds those lanes. For width <code>W</code>, the work is <code>O(N/W + W)</code>.</p>
+<h3 id="32-simulator-limitation">3.2 Simulator limitation<a class="headerlink" href="#32-simulator-limitation" title="Permanent link">¶</a></h3>
+<p>The original code called <code>interleave(x, x)</code>. The interface comments do not mention a restriction on using the same vector for input and output, but the simulator writes destination lanes before reading all source lanes. At width 4, <code>[a, a, b, b]</code> becomes <code>[a, b, b, b]</code> instead of <code>[a, b, a, b]</code>. A single chunk passes because only the intact lower half is used; later chunks read the corrupted upper half.</p>
+<p>Writing each <code>hadd</code> result into <code>temp</code> gives <code>interleave</code> distinct input and output vectors. This preserves the original reduction algorithm and adds no vector instructions.</p>
+<p>The corrected version passes at widths 2, 4, 8, and 16, covering one chunk, multiple chunks, and <code>N = 10,000</code>.</p>
 
 
 

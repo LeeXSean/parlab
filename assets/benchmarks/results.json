@@ -11488,7 +11488,7 @@
     "width": 4,
     "n": 8,
     "clamped_pass": true,
-    "sum_pass": false,
+    "sum_pass": true,
     "instructions": 81,
     "utilization": 76.2
   },
@@ -11497,7 +11497,7 @@
     "width": 4,
     "n": 10000,
     "clamped_pass": true,
-    "sum_pass": false,
+    "sum_pass": true,
     "instructions": 97075,
     "utilization": 70.5
   },
@@ -11524,7 +11524,7 @@
     "width": 8,
     "n": 16,
     "clamped_pass": true,
-    "sum_pass": false,
+    "sum_pass": true,
     "instructions": 93,
     "utilization": 68.8
   },
@@ -11533,7 +11533,7 @@
     "width": 8,
     "n": 10000,
     "clamped_pass": true,
-    "sum_pass": false,
+    "sum_pass": true,
     "instructions": 52877,
     "utilization": 66.7
   },
@@ -11560,7 +11560,7 @@
     "width": 16,
     "n": 32,
     "clamped_pass": true,
-    "sum_pass": false,
+    "sum_pass": true,
     "instructions": 93,
     "utilization": 66.6
   },
@@ -11569,7 +11569,7 @@
     "width": 16,
     "n": 10000,
     "clamped_pass": true,
-    "sum_pass": false,
+    "sum_pass": true,
     "instructions": 27592,
     "utilization": 65.0
   },
