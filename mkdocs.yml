@@ -64,7 +64,11 @@ nav:
           - P5 · SAXPY: asst1/p5.md
           - P6 · K-means: asst1/p6.md
           - Measurements: asst1/measurements.md
-      - A2 · Task system: asst2/index.md
+      - A2 · Task system:
+          - Overview: asst2/index.md
+          - Part A · Thread pools: asst2/part-a.md
+          - Part B · Task graphs: asst2/part-b.md
+          - Appendix · Measurements: asst2/measurements.md
       - A3 · CUDA renderer: asst3/index.md
       - A4 · MPI wire routing: cmu-asst4/index.md
       - A5 · RK4 kernel: asst5/index.md

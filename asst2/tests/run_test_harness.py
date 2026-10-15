@@ -3,6 +3,10 @@ import platform
 import re
 import subprocess
 import multiprocessing
+import shlex
+import math
+
+from reference_timer import ReferenceTimerCalibration
 
 STUDENT_BINARY_NAME = "runtasks"
 
@@ -61,10 +65,17 @@ LIST_OF_IMPLEMENTATIONS = [
 ]
 
 
-def run_test(cmd, is_reference):
+def run_test(cmd, is_reference, reference_timer, timeout):
     runtimes = {}
     try:
-        output = subprocess.check_output(cmd, shell=True).decode('utf-8')
+        command = shlex.split(cmd)
+        if is_reference:
+            output, correction = reference_timer.run(command, timeout)
+        else:
+            output = subprocess.check_output(
+                command, timeout=timeout)
+            correction = 1.0
+        output = output.decode('utf-8')
         for line in output.split('\n'):
             m = re.match(r'\[(.*)\]:\s+\[(\d+\.\d+)\] ms', line)
             if m is not None:
@@ -73,11 +84,12 @@ def run_test(cmd, is_reference):
                     implementation = "REFERENCE [%s]" % implementation
                 else:
                     implementation = "STUDENT [%s]" % implementation
-                runtime = float(m.group(2))
+                runtime = float(m.group(2)) * correction
                 runtimes[implementation] = [runtime]
     except Exception as e:
         print(e)
-        print("%s solution failed correctness check!" % ("REFERENCE" if is_reference else "STUDENT"))
+        print("%s solution failed correctness check!" % (
+            "REFERENCE" if is_reference else "STUDENT"))
     return runtimes
 
 def pretty_print(test_name, runtimes):
@@ -99,6 +111,7 @@ def pretty_print_with_comparison(test_name, runtimes, perf_threshold, impl_perf_
         try:
             relative_perf = student_time / ref_time
         except:
+            impl_perf_ok[impl] = False
             continue
 
         # Check the threshold
@@ -108,7 +121,9 @@ def pretty_print_with_comparison(test_name, runtimes, perf_threshold, impl_perf_
         if not perf_ok:
             impl_perf_ok[impl] = False
 
-        print("{:<40}{:<10}{:<12}{:.2f}  {}".format(impl, student_time, ref_time, relative_perf, feedback))
+        print("{:<40}{:<10}{:<12}{:.2f}  {}".format(
+            impl, round(student_time, 3), round(ref_time, 3),
+            relative_perf, feedback))
 
 
 
@@ -125,8 +140,16 @@ if __name__ == '__main__':
                             x[0] for x in LIST_OF_TESTS]))
     parser.add_argument('-a', '--run_async', action='store_true',
                         help='Run async tests')
+    parser.add_argument('--raw-reference-timer', action='store_true',
+                        help='Disable local calibration of the legacy Linux x86 reference timer')
+    parser.add_argument('--timeout', type=float, default=180,
+                        help='Timeout in seconds for each program execution (180 by default)')
 
     args = parser.parse_args()
+    if not math.isfinite(args.timeout) or args.timeout <= 0:
+        parser.error('--timeout must be finite and positive')
+    reference_timer = ReferenceTimerCalibration(
+        enabled=not args.raw_reference_timer)
 
     test_names_and_num_threads = []
 
@@ -187,7 +210,12 @@ if __name__ == '__main__':
         for i in range(NUM_TEST_RUNS):
             for (cmd, is_reference) in zip(cmds, is_references):
                 cmd = "%s %s" % (cmd, test_name)
-                runtimes = run_test(cmd, is_reference=is_reference)
+                author = "REFERENCE" if is_reference else "STUDENT"
+                runtimes = run_test(
+                    cmd, is_reference, reference_timer, args.timeout)
+                for impl in LIST_OF_IMPLEMENTATIONS:
+                    if "%s %s" % (author, impl) not in runtimes:
+                        impl_perf_ok[impl] = False
                 for key in runtimes:
                     if key not in all_runtimes:
                         all_runtimes[key] = []
