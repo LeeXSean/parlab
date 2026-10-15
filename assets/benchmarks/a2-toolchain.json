@@ -1,0 +1,41 @@
+{
+  "packages": [
+    {
+      "filename": "gcc-9-base_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+files/gcc-9-base_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "sha256": "080f75c92bec8a8f9fb6f684458d24b036df17cae8f3ade9168574fb41eff5e1"
+    },
+    {
+      "filename": "cpp-9_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+files/cpp-9_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "sha256": "8efc0b4f85c17583b76f85611780fe9833f49ba5ff60ab25a8585674c0579858"
+    },
+    {
+      "filename": "gcc-9_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+files/gcc-9_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "sha256": "d8a419a621152f4460932e4a66db82aa2e894bf3c8e20e2a1551e17590ed4281"
+    },
+    {
+      "filename": "g++-9_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+files/g++-9_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "sha256": "a99683cae0408684c03c084b3315c9a06a3a6a76eea1dce2285735433f543eb1"
+    },
+    {
+      "filename": "libgcc-9-dev_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+files/libgcc-9-dev_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "sha256": "b0b84d9a7be62a637c151380079799764e27c05815fed64510edbf6792e38d2e"
+    },
+    {
+      "filename": "libstdc++-9-dev_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+files/libstdc++-9-dev_9.3.0-17ubuntu1~20.04_amd64.deb",
+      "sha256": "6e81db430410e84ad5285f1c636de6f8c6c760375db73234f9f092a73a8a2aa5"
+    },
+    {
+      "filename": "libisl22_0.22.1-1_amd64.deb",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+files/libisl22_0.22.1-1_amd64.deb",
+      "sha256": "67cadab06a50a29cde11c1c1d02847afbae6f0465686481c9106577777b88a44"
+    }
+  ],
+  "runtime": "Host libstdc++.so.6 and libgcc_s.so.1; extracted compiler dependency libisl.so.22",
+  "system_compiler_unchanged": true
+}

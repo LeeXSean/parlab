@@ -1,0 +1,1398 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Local implementations, measurements, and performance analysis for CS149 and 15-418.">
+      
+      
+        <meta name="author" content="Xiang Li">
+      
+      
+        <link rel="canonical" href="https://leexsean.github.io/parlab/asst2/part-b/">
+      
+      
+        <link rel="prev" href="../part-a/">
+      
+      
+        <link rel="next" href="../measurements/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>A2 · Task graphs - Parallel Lab Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#part-b-a-graph-of-launches" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Parallel Lab Notes" class="md-header__button md-logo" aria-label="Parallel Lab Notes" data-md-component="logo">
+      Parallel Lab Notes
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Parallel Lab Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              A2 · Task graphs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LeeXSean/parlab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LeeXSean/parlab
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Parallel Lab Notes" class="md-nav__button md-logo" aria-label="Parallel Lab Notes" data-md-component="logo">
+      Parallel Lab Notes
+    </a>
+    Parallel Lab Notes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LeeXSean/parlab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LeeXSean/parlab
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assignments
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Assignments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A1 · CPU parallelism
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    A1 · CPU parallelism
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P1 · CPU threads
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P2 · SIMD intrinsics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P3 · ISPC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P4 · Iterative sqrt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P5 · SAXPY
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P6 · K-means
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/measurements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measurements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A2 · Task system
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    A2 · Task system
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part A · Thread pools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part B · Task graphs
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part B · Task graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#members" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Members
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-submit-and-connect-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Submit and connect a node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-execute-and-advance-the-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Execute and advance the graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-follow-one-graph-through-the-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Follow one graph through the lists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-return-to-the-caller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Return to the caller
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../measurements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix · Measurements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A3 · CUDA renderer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmu-asst4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A4 · MPI wire routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A5 · RK4 kernel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#members" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Members
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-submit-and-connect-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Submit and connect a node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-execute-and-advance-the-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Execute and advance the graph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-follow-one-graph-through-the-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Follow one graph through the lists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-return-to-the-caller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Return to the caller
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="part-b-a-graph-of-launches">Part B · A graph of launches<a class="headerlink" href="#part-b-a-graph-of-launches" title="Permanent link">¶</a></h1>
+<p>The single shared launch from Part A becomes a <code>TaskNode</code>. Each node stores its
+<code>runnable_</code>, task counters, unfinished predecessors (<code>prev_</code>), and successors
+(<code>next_</code>). The system's <code>taskID_</code> counter assigns each launch its ID.</p>
+<h2 id="members">Members<a class="headerlink" href="#members" title="Permanent link">¶</a></h2>
+<p>Part A stores the launch fields on the pool; Part B moves them into each node:</p>
+<div class="language-text highlight"><pre><span></span><code> runnable_          -----+       ready_ / waiting_
+ num_total_tasks_   -----+              |
+ num_left_tasks_    -----+-----&gt; TaskNode
+ num_workers_       -----+       |-- runnable_
+                                |-- num_total_tasks_
+                                |-- num_left_tasks_
+                                |-- num_workers_
+                                |-- taskID_
+                                |-- prev_
+                                +-- next_
+</code></pre></div>
+<p>Each node starts with the caller's pointer, its total task count, the same count
+of unclaimed tasks, and zero active workers. The pointer and total remain fixed;
+claims and callback returns change the two live counters as in Part A. The node
+also adds:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Role and changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>taskID_</code></td>
+<td>This launch's assigned ID; fixed until removal.</td>
+</tr>
+<tr>
+<td><code>prev_</code></td>
+<td>Unfinished predecessor IDs; completion removes them until empty.</td>
+</tr>
+<tr>
+<td><code>next_</code></td>
+<td>Initially empty; later dependent submissions append their IDs. Completion walks these edges.</td>
+</tr>
+</tbody>
+</table>
+<p>The pool's members are:</p>
+<table>
+<thead>
+<tr>
+<th>Members</th>
+<th>Role and changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>num_threads_</code>, <code>worker_</code>, <code>flag_</code></td>
+<td>Fixed worker count and persistent array; atomic <code>flag_</code> changes from <code>true</code> to <code>false</code> at shutdown.</td>
+</tr>
+<tr>
+<td><code>taskID_</code></td>
+<td>Next unused launch ID, starting at <code>0</code>; each accepted launch increments it. <code>sync()</code> does not reset it.</td>
+</tr>
+<tr>
+<td><code>waiting_</code>, <code>waiting_map_</code></td>
+<td>Initially empty; nodes with unfinished predecessors and their <code>ID → iterator</code> index; nodes leave when unblocked.</td>
+</tr>
+<tr>
+<td><code>ready_</code>, <code>ready_map_</code></td>
+<td>Initially empty; dependency-ready nodes and their index; nodes stay until all their callbacks finish.</td>
+</tr>
+<tr>
+<td><code>mutex_</code></td>
+<td>Protects ID allocation, lists, maps, dependency edges, and counters.</td>
+</tr>
+<tr>
+<td><code>undone_</code>, <code>done_</code></td>
+<td>Workers wait on <code>undone_</code>; the caller waits on <code>done_</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Unlike Part A, the mutex and condition variables are value members. They are
+constructed before workers start and destroyed after the destructor joins them.
+The system's <code>taskID_</code> advances; each node's <code>taskID_</code> is a fixed copy.</p>
+<p><code>taskID</code>, <code>deps_fn</code>, <code>ready_node</code>, <code>next_node</code>, <code>prev_node</code>, and <code>lk</code> are local
+variables from the source.</p>
+<h2 id="1-submit-and-connect-a-node">1. Submit and connect a node<a class="headerlink" href="#1-submit-and-connect-a-node" title="Permanent link">¶</a></h2>
+<div class="language-text highlight"><pre><span></span><code>                        runAsyncWithDeps()
+                                 |
+                   +---------------------------+
+                   | mutex_.lock()             |
+                   | taskID = taskID_++        |
+                   | deps_fn = deps            |
+                   +---------------------------+
+                                 |
+             +---------------------------------------+
+             | waiting_map_.find(deps[i])            |
+             | ready_map_.find(deps[i])              |
+             | deps_fn.erase(...)                    |
+             +---------------------------------------+
+                                 |
+                         deps_fn.empty()
+                     true /           \ false
+                         v               v
+   +-----------------------------+   +--------------------------------------+
+   | ready_.push_back(...)       |   | prev_node-&gt;next_.push_back(taskID)   |
+   | ready_map_[taskID] = ...    |   | waiting_.push_back(...)              |
+   | prev_ = []                  |   | waiting_map_[taskID] = ...           |
+   +-----------------------------+   | prev_ = deps_fn                      |
+                  |                  +--------------------------------------+
+                  |                                      |
+                  +-------------------+------------------+
+                                      v
+                        +----------------------------+
+                        | mutex_.unlock()            |
+                        | undone_.notify_all()       |
+                        | return taskID              |
+                        +----------------------------+
+</code></pre></div>
+<p>The diagram starts after the input guard: a null runnable or zero tasks returns
+<code>-1</code> before allocating an ID. Empty <code>deps</code> skips the lookup box and enters
+<code>ready_</code> directly. Otherwise the box repeats for each dependency, and
+<code>deps_fn.erase(...)</code> runs only when that valid ID is absent from both maps,
+meaning its launch has completed. These checks and edge updates hold <code>mutex_</code>.
+Exact branches are in <code>runAsyncWithDeps()</code> in <code>asst2/part_b/tasksys.cpp</code>.</p>
+<p>The maps store iterators to nodes in their corresponding lists. Workers may
+start execution while the caller submits later nodes.</p>
+<h2 id="2-execute-and-advance-the-graph">2. Execute and advance the graph<a class="headerlink" href="#2-execute-and-advance-the-graph" title="Permanent link">¶</a></h2>
+<div class="language-text highlight"><pre><span></span><code>                            thread_fn()
+                                  |
+                                  v
+             +----------------------------------------+&lt;--------------------+
+             | ready_                                 |                     |
+             | num_left_tasks_ &gt; 0                    |                     |
+             +----------------------------------------+                     |
+                                  |                                         |
+                          true    |    false --&gt; undone_.wait(lk) ----------+
+                                  v                                         |
+             +----------------------------------------+                     |
+             | num_left_tasks_--                      |                     |
+             | num_workers_++                         |                     |
+             +----------------------------------------+                     |
+                                  | lk.unlock()                             |
+                                  v                                         |
+             +----------------------------------------+                     |
+             | runnable-&gt;runTask(...)                 |                     |
+             +----------------------------------------+                     |
+                                  | lk.lock()                               |
+                                  v                                         |
+             +----------------------------------------+                     |
+             | num_workers_--                         |                     |
+             | num_left_tasks_ == 0 &amp;&amp;                |                     |
+             | num_workers_ == 0                      |                     |
+             +----------------------------------------+                     |
+                          true    |    false -------------------------------+
+                                  v                                         |
+             +----------------------------------------+                     |
+             | next_node-&gt;prev_.erase(...)            |                     |
+             | if (next_node-&gt;prev_.empty())          |                     |
+             |   ready_.splice(...)                   |                     |
+             |   ready_map_[taskID] = ...             |                     |
+             |   waiting_map_.erase(taskID)           |                     |
+             |   undone_.notify_all()                 |                     |
+             | ready_map_.erase(...)                  |                     |
+             | ready_.erase(...) / ready_.pop_front() |                     |
+             +----------------------------------------+                     |
+                                  |                                         |
+               ready_.empty() &amp;&amp; waiting_.empty() -- false -----------------+
+                                  | true
+                                  v
+                             lk.unlock()
+                           done_.notify_one()
+</code></pre></div>
+<p>The diagram shows the inner loop, entered only when <code>!ready_.empty()</code>. The
+outer loop first exits on <code>!flag_</code> and waits on <code>undone_</code> when
+<code>ready_.empty() &amp;&amp; waiting_.empty()</code>. After waking, it rechecks emptiness before
+entering the inner loop. Unqualified counters belong to the selected node;
+<code>next_node</code> is a successor iterator. The worker copies the selected pointer and
+counts into locals before unlocking for the callback. All queue, edge, and
+counter updates hold <code>mutex_</code>.</p>
+<p>Workers scan <code>ready_</code> past nodes with no unclaimed tasks. A node with
+<code>num_left_tasks_ == 0</code> may still have active workers, so it remains in the list.
+If no task is available, the worker waits on <code>undone_</code> and selects again after
+waking.</p>
+<p>Completion visits each successor in <code>next_</code>. The successor moves to <code>ready_</code>
+only after its <code>prev_</code> becomes empty. <code>splice</code> transfers the same node and
+preserves its iterator for the map update.</p>
+<p>The diagram groups two cleanup checks. Non-front removal requires both counters
+to be zero and <code>ready_node != ready_.begin()</code>. The code then independently checks
+the front node's two counters before using <code>pop_front</code>. Both paths keep
+<code>mutex_</code> held through dependency updates and node removal. See <code>thread_fn()</code>
+in <code>asst2/part_b/tasksys.cpp</code> for the exact scan, wait, and cleanup branches.</p>
+<h2 id="3-follow-one-graph-through-the-lists">3. Follow one graph through the lists<a class="headerlink" href="#3-follow-one-graph-through-the-lists" title="Permanent link">¶</a></h2>
+<p>The letters A, B, C, and D below name launches with IDs <code>0</code>, <code>1</code>, <code>2</code>, and <code>3</code>.
+Each listed <code>taskID_</code> is also a key in the corresponding map. The pool has two
+workers, and submission advances the system's <code>taskID_</code> from <code>0</code> to <code>4</code>.</p>
+<div class="language-text highlight"><pre><span></span><code>                         +---- B ----+
+                         |           |
+                  A -----+           +---- D
+                         |           |
+                         +---- C ----+
+
+ +----------------+------------------------------------+------------------------------------+
+ | Event          | ready_ + ready_map_                | waiting_ + waiting_map_            |
+ +----------------+------------------------------------+------------------------------------+
+ | Submitted      | taskID_=0; prev_=[]                | taskID_=1; prev_=[0]               |
+ |                | next_=[1,2]                        | next_=[3]                          |
+ |                | num_left_tasks_=2; num_workers_=0  | num_left_tasks_=1; num_workers_=0  |
+ |                |                                    | taskID_=2; prev_=[0]               |
+ |                |                                    | next_=[3]                          |
+ |                |                                    | num_left_tasks_=1; num_workers_=0  |
+ |                |                                    | taskID_=3; prev_=[1,2]             |
+ |                |                                    | next_=[]                           |
+ |                |                                    | num_left_tasks_=1; num_workers_=0  |
+ +----------------+------------------------------------+------------------------------------+
+ | 0 finishes     | taskID_=1; prev_=[]                | taskID_=3; prev_=[1,2]             |
+ |                | next_=[3]                          | next_=[]                           |
+ |                | num_left_tasks_=1; num_workers_=0  | num_left_tasks_=1; num_workers_=0  |
+ |                | taskID_=2; prev_=[]                |                                    |
+ |                | next_=[3]                          |                                    |
+ |                | num_left_tasks_=1; num_workers_=0  |                                    |
+ +----------------+------------------------------------+------------------------------------+
+ | 1 finishes     | taskID_=2; prev_=[]                | taskID_=3; prev_=[2]               |
+ | 2 computing    | next_=[3]                          | next_=[]                           |
+ |                | num_left_tasks_=0; num_workers_=1  | num_left_tasks_=1; num_workers_=0  |
+ +----------------+------------------------------------+------------------------------------+
+ | 2 finishes     | taskID_=3; prev_=[]                | []                                 |
+ |                | next_=[]                           |                                    |
+ |                | num_left_tasks_=1; num_workers_=0  |                                    |
+ +----------------+------------------------------------+------------------------------------+
+ | 3 finishes     | []                                 | []                                 |
+ +----------------+------------------------------------+------------------------------------+
+</code></pre></div>
+<p>All four launches are submitted before a worker claims a task. A has two tasks;
+B, C, and D have one each. B and C can run concurrently after A finishes. If B
+finishes first, D still waits for C. C stays in <code>ready_</code> with
+<code>num_left_tasks_ = 0</code> and <code>num_workers_ = 1</code>. Their completion order may reverse.</p>
+<p>Node removal destroys that launch record and its vectors. It does not delete
+the caller's runnable.
+Removing the ID from its map lets later submissions recognize it as completed.</p>
+<h2 id="4-return-to-the-caller">4. Return to the caller<a class="headerlink" href="#4-return-to-the-caller" title="Permanent link">¶</a></h2>
+<p>The three entry points share the sleeping workers, with these distinct paths:</p>
+<table>
+<thead>
+<tr>
+<th>Entry point</th>
+<th>Queue operation</th>
+<th>Return condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>run()</code></td>
+<td>Append a dependency-free node to <code>ready_</code> and <code>ready_map_</code>; notify <code>undone_</code></td>
+<td><code>ready_.empty()</code></td>
+</tr>
+<tr>
+<td><code>runAsyncWithDeps()</code></td>
+<td>Follow the submission diagram</td>
+<td>Node published and ID returned</td>
+</tr>
+<tr>
+<td><code>sync()</code></td>
+<td>Add no node; wait on <code>done_</code></td>
+<td><code>ready_.empty() &amp;&amp; waiting_.empty()</code></td>
+</tr>
+</tbody>
+</table>
+<p>The handout uses one calling thread and separates synchronous and asynchronous
+launches. In synchronous mode <code>waiting_</code> stays empty, so <code>run()</code> checks only
+<code>ready_</code>.</p>
+<p>The worker notifies <code>done_</code> after it observes both lists empty. The caller
+rechecks its condition under <code>mutex_</code>. Completed launches have already been
+removed, so this also accounts for the end of their callbacks.</p>
+<p>After this example's <code>sync()</code>, all four containers are empty, the system's
+<code>taskID_</code> remains <code>4</code>, and <code>flag_</code> remains <code>true</code>. The workers stay alive.</p>
+<p>Shutdown sets <code>flag_ = false</code> under the mutex, notifies <code>undone_</code>, joins every
+worker, and deletes <code>worker_</code>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+  <footer class="notes-footer md-grid">
+    <nav aria-label="Notes navigation">
+      <a href="../..">All notes</a>
+      <a href="../part-a/">Previous: Part A · Thread pools</a>
+      <a href="../measurements/">Next: Appendix · Measurements</a>
+      <a href="https://github.com/LeeXSean/parlab">Source</a>
+    </nav>
+    © 2026 Xiang Li
+  </footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.sections", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

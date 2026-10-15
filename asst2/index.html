@@ -18,7 +18,7 @@
         <link rel="prev" href="../asst1/measurements/">
       
       
-        <link rel="next" href="../asst3/">
+        <link rel="next" href="part-a/">
       
       
         
@@ -615,16 +615,22 @@
   
   
   
-    <li class="md-nav__item md-nav__item--active">
+    
+    
+    
+    
       
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
           
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -638,8 +644,35 @@
   
   
 
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    A2 · Task system
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -648,7 +681,7 @@
   <span class="md-ellipsis">
     
   
-    A2 · Task system
+    Overview
   
 
     
@@ -658,35 +691,97 @@
 
       </a>
       
-        
+    </li>
+  
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+              
+            
+              
+                
   
   
   
+  
+    <li class="md-nav__item">
+      <a href="part-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
     
   
+    Part A · Thread pools
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#planned-sections" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Planned sections
-      
-    </span>
-  </a>
+
+    
+  </span>
   
-</li>
-      
-    </ul>
   
-</nav>
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="part-b/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part B · Task graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="measurements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix · Measurements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -804,25 +899,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#planned-sections" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Planned sections
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -839,15 +915,72 @@
 
 
 <h1 id="assignment-2-task-system">Assignment 2 · Task system<a class="headerlink" href="#assignment-2-task-system" title="Permanent link">¶</a></h1>
-<p><span class="lab-meta">CS149 · Pending</span></p>
-<p>Build a CPU task execution library.</p>
-<h2 id="planned-sections">Planned sections<a class="headerlink" href="#planned-sections" title="Permanent link">¶</a></h2>
-<ul>
-<li>Part A: parallel task launch, spinning thread pool, and sleeping thread pool.</li>
-<li>Part B: asynchronous launch and dependency scheduling.</li>
-<li>Correctness tests and performance across workloads.</li>
-</ul>
-<p><a href="https://github.com/stanford-cs149/asst2">Handout</a></p>
+<p><span class="lab-meta">CS149 · Implemented</span></p>
+<p>The implementation develops from one shared launch into a scheduler for a graph
+of launches. Workers claim work under a mutex, run the callback without it, and
+return to update completion state.</p>
+<p>A task is one callback; a launch contains the tasks submitted by one <code>run()</code> or
+<code>runAsyncWithDeps()</code> call. <code>TaskID</code> identifies the launch. Member names end in
+<code>_</code>; calls use <code>()</code>. The overview separates the caller, shared state, and workers:</p>
+<div class="language-text highlight"><pre><span></span><code> +----------------------+           +----------------------------------------+
+ | Caller               |           | Shared state                           |
+ | runAsyncWithDeps()   |-----+     |                                        |
+ | run()                |     +----&gt;| waiting_map_ ----&gt; waiting_            |
+ | sync()               |     |     |                        |               |
+ |                      |     |     |               prev_.empty()            |
+ | done_.wait(lk)       |     |     |                        v               |
+ +-------------+--------+     +----&gt;| ready_map_   ----&gt; ready_              |
+               |                    +----------------------------------------+
+               |                                               |
+               |                                               v
+               |                                 +--------------------------+
+               |                                 | worker_                  |
+               |                                 | thread_fn()              |
+               |                                 +--------------------------+
+               |                                               | lk.unlock()
+               |                                               v
+               |                                 +--------------------------+
+               |                                 | runnable-&gt;runTask(...)   |
+               |                                 +--------------------------+
+               |                                               | lk.lock()
+               |                                               v
+               |                      +--------------------------------------+
+               |                      | num_workers_--                       |
+               +----------------------| prev_.erase(...)                     |
+                 done_.notify_one()   | ready_.splice(...)                   |
+                                      | ready_.erase(...)                    |
+                                      +--------------------------------------+
+</code></pre></div>
+<p>Submission takes the lower entry into <code>ready_</code> when no unfinished dependency
+remains; otherwise it takes the upper entry into <code>waiting_</code>. A callback return
+decrements <code>num_workers_</code>. The dependency updates and node removal shown below
+it require <code>num_left_tasks_ == 0 &amp;&amp; num_workers_ == 0</code>; they happen once per
+completed launch. Workers notify <code>done_</code> when both lists are empty. The Part A
+and Part B diagrams expand this overview; their captions identify omitted guards.</p>
+<p>Part A keeps <code>runnable_</code>, <code>num_total_tasks_</code>, <code>num_left_tasks_</code>, and
+<code>num_workers_</code> on the task-system object. Part B moves these four fields into
+each <code>TaskNode</code> and adds dependency edges. The constructor starts the sleeping
+workers; the caller submits nodes; workers advance the graph as launches finish.</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="part-a/">Part A · Thread pools</a></td>
+<td>Shared counters, three worker lifetimes, and caller/worker handoff</td>
+</tr>
+<tr>
+<td><a href="part-b/">Part B · Task graphs</a></td>
+<td>Node submission, worker execution, and a graph traced through the lists</td>
+</tr>
+</tbody>
+</table>
+<p><a href="measurements/">Appendix · Measurements and checks</a> ·
+<a href="https://github.com/stanford-cs149/asst2">Handout</a></p>
 
 
 
@@ -877,7 +1010,7 @@
     <nav aria-label="Notes navigation">
       <a href="..">All notes</a>
       <a href="../asst1/measurements/">Previous: Measurements</a>
-      <a href="../asst3/">Next: A3 · CUDA renderer</a>
+      <a href="part-a/">Next: Part A · Thread pools</a>
       <a href="https://github.com/LeeXSean/parlab">Source</a>
     </nav>
     © 2026 Xiang Li

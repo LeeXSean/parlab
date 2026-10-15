@@ -1,0 +1,2558 @@
+{
+  "environment": {
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  20\nOn-line CPU(s) list:                     0-19\nVendor ID:                               GenuineIntel\nModel name:                              13th Gen Intel(R) Core(TM) i9-13900H\nCPU family:                              6\nModel:                                   186\nThread(s) per core:                      2\nCore(s) per socket:                      14\nSocket(s):                               1\nStepping:                                2\nCPU(s) scaling MHz:                      36%\nCPU max MHz:                             5400.0000\nCPU min MHz:                             400.0000\nBogoMIPS:                                5990.40\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb intel_pt sha_ni xsaveopt xsavec xgetbv1 xsaves split_lock_detect user_shstk avx_vnni dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req hfi vnmi umip pku ospke waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize pconfig arch_lbr ibt flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               544 KiB (14 instances)\nL1i cache:                               704 KiB (14 instances)\nL2 cache:                                11.5 MiB (8 instances)\nL3 cache:                                24 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-19\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Mitigation; Clear Register File\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Mitigation; IBPB before exit to userspace\n",
+    "compilers": {
+      "gcc9": "x86_64-linux-gnu-g++-9 (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0",
+      "current": "x86_64-linux-gnu-g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+    },
+    "threads": 8,
+    "flags": "Makefile: -O3 -std=c++11 -Wall, x86-64",
+    "outer_rounds": 3,
+    "inner_iterations": 1,
+    "statistic": "minimum of outer runs, each reporting its inner minimum",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "reference_timer": "TSC calibrated against CLOCK_MONOTONIC"
+  },
+  "source_sha256": {
+    "asst2/part_a/tasksys.cpp": "284642872e8afce1c5bbb2fae924a511603470ca1d4cb19356132ca0e39c4a82",
+    "asst2/part_a/tasksys.h": "73e67354992623308b5a155cf3f69fbbe4157ecedec8b93d1f726919a04ee8f5",
+    "asst2/part_a/itasksys.h": "4865a64a652f4869ab804b7440e502d1839d1d2a62a0cb94d0e18403ae3c96a3",
+    "asst2/part_a/Makefile": "09b3f7cae7da1287eddcf30ee13c7dcccd40a4d53cbb72d47ee4de0aec8799db",
+    "asst2/part_b/tasksys.cpp": "14731288a890f3d41b33ee23a38d98cc4134f605e5564095c92d47f064a79506",
+    "asst2/part_b/tasksys.h": "c55af4618dc3ddd8c61b0f6c58ba8ebcfca26db66f3f90213016c350e29636ef",
+    "asst2/part_b/itasksys.h": "4865a64a652f4869ab804b7440e502d1839d1d2a62a0cb94d0e18403ae3c96a3",
+    "asst2/part_b/Makefile": "09b3f7cae7da1287eddcf30ee13c7dcccd40a4d53cbb72d47ee4de0aec8799db",
+    "asst2/common/CycleTimer.h": "3167c422ee07e5d15754c28a26b3d21d5176489fef9a4dbcb9b89b1ff773275f",
+    "asst2/common/ppm.cpp": "0ae9acf9425d6972b48b5b086324475e0bf4de8f208a4ac9a9f29dbb3d3fc29c",
+    "asst2/tests/main.cpp": "990c04daa4a113c467a16d7578d14b38d05f17da14a589ffc07ccf1bc9e2beb4",
+    "asst2/tests/tests.h": "67f5df236f83d429d7924218054d68ea015323658f3561ff7bb3c06a70dbf633",
+    "asst2/tests/reference_timer.py": "396e145a53ac27d5c8cac5b1be5596b0ad87d8a0bcb7634863cc1b68befa9583"
+  },
+  "records": [
+    {
+      "part": "part_a",
+      "test": "super_super_light",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 10.291029181094785,
+            "Parallel + Always Spawn": 38.13499457270845,
+            "Parallel + Thread Pool + Spin": 10.559058815095451,
+            "Parallel + Thread Pool + Sleep": 8.923637341267776
+          },
+          {
+            "Serial": 8.945955205062468,
+            "Parallel + Always Spawn": 35.902842343018044,
+            "Parallel + Thread Pool + Spin": 9.808861245131691,
+            "Parallel + Thread Pool + Sleep": 9.23607016680988
+          },
+          {
+            "Serial": 3.1180997629040172,
+            "Parallel + Always Spawn": 35.86632696847202,
+            "Parallel + Thread Pool + Spin": 9.892523224701256,
+            "Parallel + Thread Pool + Sleep": 8.243496697415186
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 10.464,
+            "Parallel + Always Spawn": 37.032,
+            "Parallel + Thread Pool + Spin": 10.179,
+            "Parallel + Thread Pool + Sleep": 8.343
+          },
+          {
+            "Serial": 2.999,
+            "Parallel + Always Spawn": 36.06,
+            "Parallel + Thread Pool + Spin": 9.479,
+            "Parallel + Thread Pool + Sleep": 8.635
+          },
+          {
+            "Serial": 7.97,
+            "Parallel + Always Spawn": 36.876,
+            "Parallel + Thread Pool + Spin": 10.652,
+            "Parallel + Thread Pool + Sleep": 8.576
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 3.1180997629040172,
+          "Parallel + Always Spawn": 35.86632696847202,
+          "Parallel + Thread Pool + Spin": 9.808861245131691,
+          "Parallel + Thread Pool + Sleep": 8.243496697415186
+        },
+        "gcc9": {
+          "Serial": 2.999,
+          "Parallel + Always Spawn": 36.06,
+          "Parallel + Thread Pool + Spin": 9.479,
+          "Parallel + Thread Pool + Sleep": 8.343
+        }
+      },
+      "reference_corrections": [
+        0.1335474010964947,
+        1.4877690346021069,
+        1.6359390151647522
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 1.0053998568545428,
+        "Parallel + Thread Pool + Spin": 0.9663710968186641,
+        "Parallel + Thread Pool + Sleep": 1.012070521313609
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "super_light",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 39.99677555096595,
+            "Parallel + Always Spawn": 36.67617149398066,
+            "Parallel + Thread Pool + Spin": 11.467049300189707,
+            "Parallel + Thread Pool + Sleep": 10.049313078394785
+          },
+          {
+            "Serial": 41.77501235848448,
+            "Parallel + Always Spawn": 37.35584315537046,
+            "Parallel + Thread Pool + Spin": 11.528862800997683,
+            "Parallel + Thread Pool + Sleep": 11.394222479291654
+          },
+          {
+            "Serial": 37.27639686817068,
+            "Parallel + Always Spawn": 35.29462765105214,
+            "Parallel + Thread Pool + Spin": 11.788986112089738,
+            "Parallel + Thread Pool + Sleep": 12.18863603737144
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 40.122,
+            "Parallel + Always Spawn": 35.89,
+            "Parallel + Thread Pool + Spin": 12.718,
+            "Parallel + Thread Pool + Sleep": 10.826
+          },
+          {
+            "Serial": 36.542,
+            "Parallel + Always Spawn": 37.374,
+            "Parallel + Thread Pool + Spin": 12.254,
+            "Parallel + Thread Pool + Sleep": 9.027
+          },
+          {
+            "Serial": 41.603,
+            "Parallel + Always Spawn": 38.208,
+            "Parallel + Thread Pool + Spin": 11.58,
+            "Parallel + Thread Pool + Sleep": 10.07
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 37.27639686817068,
+          "Parallel + Always Spawn": 35.29462765105214,
+          "Parallel + Thread Pool + Spin": 11.467049300189707,
+          "Parallel + Thread Pool + Sleep": 10.049313078394785
+        },
+        "gcc9": {
+          "Serial": 36.542,
+          "Parallel + Always Spawn": 35.89,
+          "Parallel + Thread Pool + Spin": 11.58,
+          "Parallel + Thread Pool + Sleep": 9.027
+        }
+      },
+      "reference_corrections": [
+        1.1076064232772826,
+        1.14101967547483,
+        0.45778914694352824
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 1.0168686394664406,
+        "Parallel + Thread Pool + Spin": 1.0098500230402274,
+        "Parallel + Thread Pool + Sleep": 0.8982703523693896
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "ping_pong_equal",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 591.9283695933449,
+            "Parallel + Always Spawn": 135.78286159175977,
+            "Parallel + Thread Pool + Spin": 103.18787647978591,
+            "Parallel + Thread Pool + Sleep": 103.29844661941527
+          },
+          {
+            "Serial": 570.0231549641611,
+            "Parallel + Always Spawn": 137.56872352528953,
+            "Parallel + Thread Pool + Spin": 109.281811000541,
+            "Parallel + Thread Pool + Sleep": 113.52776887393777
+          },
+          {
+            "Serial": 613.5914819256623,
+            "Parallel + Always Spawn": 137.22171054005597,
+            "Parallel + Thread Pool + Spin": 105.45185252836308,
+            "Parallel + Thread Pool + Sleep": 108.4469317261599
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 596.429,
+            "Parallel + Always Spawn": 135.009,
+            "Parallel + Thread Pool + Spin": 104.89,
+            "Parallel + Thread Pool + Sleep": 104.671
+          },
+          {
+            "Serial": 605.321,
+            "Parallel + Always Spawn": 135.142,
+            "Parallel + Thread Pool + Spin": 107.198,
+            "Parallel + Thread Pool + Sleep": 100.627
+          },
+          {
+            "Serial": 611.47,
+            "Parallel + Always Spawn": 135.488,
+            "Parallel + Thread Pool + Spin": 108.104,
+            "Parallel + Thread Pool + Sleep": 146.034
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 570.0231549641611,
+          "Parallel + Always Spawn": 135.78286159175977,
+          "Parallel + Thread Pool + Spin": 103.18787647978591,
+          "Parallel + Thread Pool + Sleep": 103.29844661941527
+        },
+        "gcc9": {
+          "Serial": 596.429,
+          "Parallel + Always Spawn": 135.009,
+          "Parallel + Thread Pool + Spin": 104.89,
+          "Parallel + Thread Pool + Sleep": 100.627
+        }
+      },
+      "reference_corrections": [
+        1.3650634522143337,
+        0.7789319158680584,
+        0.13360749421407114
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 0.994300741767496,
+        "Parallel + Thread Pool + Spin": 1.0164953827744243,
+        "Parallel + Thread Pool + Sleep": 0.9741385596120554
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "ping_pong_unequal",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 1105.3657978088763,
+            "Parallel + Always Spawn": 254.2973097154894,
+            "Parallel + Thread Pool + Spin": 223.08636546865716,
+            "Parallel + Thread Pool + Sleep": 245.08862019756864
+          },
+          {
+            "Serial": 1118.9388092914826,
+            "Parallel + Always Spawn": 249.70206339099965,
+            "Parallel + Thread Pool + Spin": 220.08584728297103,
+            "Parallel + Thread Pool + Sleep": 246.4256148815541
+          },
+          {
+            "Serial": 1112.0424361819146,
+            "Parallel + Always Spawn": 243.79991479537355,
+            "Parallel + Thread Pool + Spin": 219.3492561311614,
+            "Parallel + Thread Pool + Sleep": 260.9550291916167
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 1115.977,
+            "Parallel + Always Spawn": 278.605,
+            "Parallel + Thread Pool + Spin": 250.493,
+            "Parallel + Thread Pool + Sleep": 271.585
+          },
+          {
+            "Serial": 1125.525,
+            "Parallel + Always Spawn": 273.276,
+            "Parallel + Thread Pool + Spin": 244.004,
+            "Parallel + Thread Pool + Sleep": 265.606
+          },
+          {
+            "Serial": 1064.991,
+            "Parallel + Always Spawn": 284.252,
+            "Parallel + Thread Pool + Spin": 251.116,
+            "Parallel + Thread Pool + Sleep": 259.36
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 1105.3657978088763,
+          "Parallel + Always Spawn": 243.79991479537355,
+          "Parallel + Thread Pool + Spin": 219.3492561311614,
+          "Parallel + Thread Pool + Sleep": 245.08862019756864
+        },
+        "gcc9": {
+          "Serial": 1064.991,
+          "Parallel + Always Spawn": 273.276,
+          "Parallel + Thread Pool + Spin": 244.004,
+          "Parallel + Thread Pool + Sleep": 259.36
+        }
+      },
+      "reference_corrections": [
+        0.13360449064810653,
+        0.32125193739048274,
+        0.13373804821119734
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 1.120902770738728,
+        "Parallel + Thread Pool + Spin": 1.1123994870267355,
+        "Parallel + Thread Pool + Sleep": 1.0582294673287036
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "recursive_fibonacci",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 954.3938637318063,
+            "Parallel + Always Spawn": 191.2420316229803,
+            "Parallel + Thread Pool + Spin": 220.86671602046704,
+            "Parallel + Thread Pool + Sleep": 224.8483665301786
+          },
+          {
+            "Serial": 988.7631112168317,
+            "Parallel + Always Spawn": 192.63154030685027,
+            "Parallel + Thread Pool + Spin": 219.98831981634606,
+            "Parallel + Thread Pool + Sleep": 228.61017697116668
+          },
+          {
+            "Serial": 986.7952943154952,
+            "Parallel + Always Spawn": 186.97823289904733,
+            "Parallel + Thread Pool + Spin": 209.62710464027538,
+            "Parallel + Thread Pool + Sleep": 223.44739678091022
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 882.738,
+            "Parallel + Always Spawn": 188.973,
+            "Parallel + Thread Pool + Spin": 214.016,
+            "Parallel + Thread Pool + Sleep": 215.612
+          },
+          {
+            "Serial": 885.757,
+            "Parallel + Always Spawn": 187.636,
+            "Parallel + Thread Pool + Spin": 211.814,
+            "Parallel + Thread Pool + Sleep": 213.102
+          },
+          {
+            "Serial": 874.119,
+            "Parallel + Always Spawn": 187.023,
+            "Parallel + Thread Pool + Spin": 211.157,
+            "Parallel + Thread Pool + Sleep": 205.547
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 954.3938637318063,
+          "Parallel + Always Spawn": 186.97823289904733,
+          "Parallel + Thread Pool + Spin": 209.62710464027538,
+          "Parallel + Thread Pool + Sleep": 223.44739678091022
+        },
+        "gcc9": {
+          "Serial": 874.119,
+          "Parallel + Always Spawn": 187.023,
+          "Parallel + Thread Pool + Spin": 211.157,
+          "Parallel + Thread Pool + Sleep": 205.547
+        }
+      },
+      "reference_corrections": [
+        0.195552797490869,
+        0.2518507085009234,
+        0.6205510368027856
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 1.0002394241311332,
+        "Parallel + Thread Pool + Spin": 1.0072981753115846,
+        "Parallel + Thread Pool + Sleep": 0.9198898844256327
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "math_operations_in_tight_for_loop",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 385.8770431871719,
+            "Parallel + Always Spawn": 248.30502155150953,
+            "Parallel + Thread Pool + Spin": 133.57481429578186,
+            "Parallel + Thread Pool + Sleep": 122.3610391289395
+          },
+          {
+            "Serial": 369.7566758908039,
+            "Parallel + Always Spawn": 239.26541673721997,
+            "Parallel + Thread Pool + Spin": 133.0781319523648,
+            "Parallel + Thread Pool + Sleep": 119.7183734667001
+          },
+          {
+            "Serial": 363.2219544074441,
+            "Parallel + Always Spawn": 244.84126455867613,
+            "Parallel + Thread Pool + Spin": 134.53618605421315,
+            "Parallel + Thread Pool + Sleep": 115.08367161049775
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 376.67,
+            "Parallel + Always Spawn": 246.508,
+            "Parallel + Thread Pool + Spin": 132.786,
+            "Parallel + Thread Pool + Sleep": 116.773
+          },
+          {
+            "Serial": 374.418,
+            "Parallel + Always Spawn": 245.55,
+            "Parallel + Thread Pool + Spin": 139.431,
+            "Parallel + Thread Pool + Sleep": 123.11
+          },
+          {
+            "Serial": 374.206,
+            "Parallel + Always Spawn": 247.15,
+            "Parallel + Thread Pool + Spin": 139.563,
+            "Parallel + Thread Pool + Sleep": 120.468
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 363.2219544074441,
+          "Parallel + Always Spawn": 239.26541673721997,
+          "Parallel + Thread Pool + Spin": 133.0781319523648,
+          "Parallel + Thread Pool + Sleep": 115.08367161049775
+        },
+        "gcc9": {
+          "Serial": 374.206,
+          "Parallel + Always Spawn": 245.55,
+          "Parallel + Thread Pool + Spin": 132.786,
+          "Parallel + Thread Pool + Sleep": 116.773
+        }
+      },
+      "reference_corrections": [
+        1.1017660804521876,
+        0.13322721320394001,
+        0.1335474010964947
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 1.0262661580953936,
+        "Parallel + Thread Pool + Spin": 0.9978048087384532,
+        "Parallel + Thread Pool + Sleep": 1.0146791318513004
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "math_operations_in_tight_for_loop_fewer_tasks",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 371.69801425064054,
+            "Parallel + Always Spawn": 267.8806620282304,
+            "Parallel + Thread Pool + Spin": 133.15074570223445,
+            "Parallel + Thread Pool + Sleep": 130.31593960582012
+          },
+          {
+            "Serial": 380.7002376207501,
+            "Parallel + Always Spawn": 266.8449350055379,
+            "Parallel + Thread Pool + Spin": 133.44363476584272,
+            "Parallel + Thread Pool + Sleep": 128.38793080253274
+          },
+          {
+            "Serial": 372.8322924851501,
+            "Parallel + Always Spawn": 265.11509551913497,
+            "Parallel + Thread Pool + Spin": 133.30474546870238,
+            "Parallel + Thread Pool + Sleep": 129.97153588473498
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 373.064,
+            "Parallel + Always Spawn": 271.246,
+            "Parallel + Thread Pool + Spin": 141.328,
+            "Parallel + Thread Pool + Sleep": 129.594
+          },
+          {
+            "Serial": 368.572,
+            "Parallel + Always Spawn": 273.694,
+            "Parallel + Thread Pool + Spin": 138.051,
+            "Parallel + Thread Pool + Sleep": 131.547
+          },
+          {
+            "Serial": 371.498,
+            "Parallel + Always Spawn": 275.176,
+            "Parallel + Thread Pool + Spin": 137.753,
+            "Parallel + Thread Pool + Sleep": 126.133
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 371.69801425064054,
+          "Parallel + Always Spawn": 265.11509551913497,
+          "Parallel + Thread Pool + Spin": 133.15074570223445,
+          "Parallel + Thread Pool + Sleep": 128.38793080253274
+        },
+        "gcc9": {
+          "Serial": 368.572,
+          "Parallel + Always Spawn": 271.246,
+          "Parallel + Thread Pool + Spin": 137.753,
+          "Parallel + Thread Pool + Sleep": 126.133
+        }
+      },
+      "reference_corrections": [
+        0.15340689952997086,
+        0.1335474010964947,
+        0.1335474010964947
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 1.0231254447011393,
+        "Parallel + Thread Pool + Spin": 1.0345642397531711,
+        "Parallel + Thread Pool + Sleep": 0.9824365827189712
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "math_operations_in_tight_for_loop_fan_in",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 208.65350023580024,
+            "Parallel + Always Spawn": 56.85982418091651,
+            "Parallel + Thread Pool + Spin": 41.33361151369139,
+            "Parallel + Thread Pool + Sleep": 45.49040977477036
+          },
+          {
+            "Serial": 208.81808512559897,
+            "Parallel + Always Spawn": 58.054069901488816,
+            "Parallel + Thread Pool + Spin": 45.421983660899734,
+            "Parallel + Thread Pool + Sleep": 48.725245637652705
+          },
+          {
+            "Serial": 209.37328014474838,
+            "Parallel + Always Spawn": 57.5792087956312,
+            "Parallel + Thread Pool + Spin": 43.233992152643694,
+            "Parallel + Thread Pool + Sleep": 49.70144774285233
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 208.437,
+            "Parallel + Always Spawn": 56.945,
+            "Parallel + Thread Pool + Spin": 43.114,
+            "Parallel + Thread Pool + Sleep": 45.683
+          },
+          {
+            "Serial": 204.304,
+            "Parallel + Always Spawn": 57.041,
+            "Parallel + Thread Pool + Spin": 50.131,
+            "Parallel + Thread Pool + Sleep": 51.204
+          },
+          {
+            "Serial": 209.252,
+            "Parallel + Always Spawn": 57.311,
+            "Parallel + Thread Pool + Spin": 47.816,
+            "Parallel + Thread Pool + Sleep": 50.357
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 208.65350023580024,
+          "Parallel + Always Spawn": 56.85982418091651,
+          "Parallel + Thread Pool + Spin": 41.33361151369139,
+          "Parallel + Thread Pool + Sleep": 45.49040977477036
+        },
+        "gcc9": {
+          "Serial": 204.304,
+          "Parallel + Always Spawn": 56.945,
+          "Parallel + Thread Pool + Spin": 43.114,
+          "Parallel + Thread Pool + Sleep": 45.683
+        }
+      },
+      "reference_corrections": [
+        0.13423315985012987,
+        0.13321753414877283,
+        0.5765762316313306
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 1.0014979965258506,
+        "Parallel + Thread Pool + Spin": 1.04307362509852,
+        "Parallel + Thread Pool + Sleep": 1.0042336445458104
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "math_operations_in_tight_for_loop_reduction_tree",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 206.05495931082007,
+            "Parallel + Always Spawn": 42.666257891912515,
+            "Parallel + Thread Pool + Spin": 36.742228726673105,
+            "Parallel + Thread Pool + Sleep": 44.33399783680554
+          },
+          {
+            "Serial": 202.26862339493226,
+            "Parallel + Always Spawn": 40.904634124048656,
+            "Parallel + Thread Pool + Spin": 40.727149627991416,
+            "Parallel + Thread Pool + Sleep": 45.08894129520403
+          },
+          {
+            "Serial": 210.97852421481227,
+            "Parallel + Always Spawn": 42.510451501221134,
+            "Parallel + Thread Pool + Spin": 41.75520899215526,
+            "Parallel + Thread Pool + Sleep": 48.2582940234888
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 202.016,
+            "Parallel + Always Spawn": 43.134,
+            "Parallel + Thread Pool + Spin": 38.493,
+            "Parallel + Thread Pool + Sleep": 49.031
+          },
+          {
+            "Serial": 203.119,
+            "Parallel + Always Spawn": 41.822,
+            "Parallel + Thread Pool + Spin": 42.996,
+            "Parallel + Thread Pool + Sleep": 46.626
+          },
+          {
+            "Serial": 204.434,
+            "Parallel + Always Spawn": 42.329,
+            "Parallel + Thread Pool + Spin": 43.469,
+            "Parallel + Thread Pool + Sleep": 52.01
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 202.26862339493226,
+          "Parallel + Always Spawn": 40.904634124048656,
+          "Parallel + Thread Pool + Spin": 36.742228726673105,
+          "Parallel + Thread Pool + Sleep": 44.33399783680554
+        },
+        "gcc9": {
+          "Serial": 202.016,
+          "Parallel + Always Spawn": 41.822,
+          "Parallel + Thread Pool + Spin": 38.493,
+          "Parallel + Thread Pool + Sleep": 46.626
+        }
+      },
+      "reference_corrections": [
+        0.1335474010964947,
+        0.1335474010964947,
+        0.1383988471808449
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 1.0224269424625414,
+        "Parallel + Thread Pool + Spin": 1.0476501108942236,
+        "Parallel + Thread Pool + Sleep": 1.0516985220153476
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "spin_between_run_calls",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 376.10114157204265,
+            "Parallel + Always Spawn": 203.2063504732611,
+            "Parallel + Thread Pool + Spin": 242.8609302564099,
+            "Parallel + Thread Pool + Sleep": 220.06976058922024
+          },
+          {
+            "Serial": 358.3125865819281,
+            "Parallel + Always Spawn": 190.20768091524533,
+            "Parallel + Thread Pool + Spin": 357.11837239096917,
+            "Parallel + Thread Pool + Sleep": 216.5835935154034
+          },
+          {
+            "Serial": 352.58577977315474,
+            "Parallel + Always Spawn": 182.59689462249682,
+            "Parallel + Thread Pool + Spin": 351.10619843082486,
+            "Parallel + Thread Pool + Sleep": 218.32630627196528
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 321.44,
+            "Parallel + Always Spawn": 184.771,
+            "Parallel + Thread Pool + Spin": 221.682,
+            "Parallel + Thread Pool + Sleep": 195.651
+          },
+          {
+            "Serial": 319.226,
+            "Parallel + Always Spawn": 179.946,
+            "Parallel + Thread Pool + Spin": 391.529,
+            "Parallel + Thread Pool + Sleep": 190.927
+          },
+          {
+            "Serial": 321.195,
+            "Parallel + Always Spawn": 182.421,
+            "Parallel + Thread Pool + Spin": 398.022,
+            "Parallel + Thread Pool + Sleep": 196.209
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 352.58577977315474,
+          "Parallel + Always Spawn": 182.59689462249682,
+          "Parallel + Thread Pool + Spin": 242.8609302564099,
+          "Parallel + Thread Pool + Sleep": 216.5835935154034
+        },
+        "gcc9": {
+          "Serial": 319.226,
+          "Parallel + Always Spawn": 179.946,
+          "Parallel + Thread Pool + Spin": 221.682,
+          "Parallel + Thread Pool + Sleep": 190.927
+        }
+      },
+      "reference_corrections": [
+        0.13364354754211488,
+        0.13350633772598147,
+        0.1444762564524833
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 0.9854822579103697,
+        "Parallel + Thread Pool + Spin": 0.9127940001133594,
+        "Parallel + Thread Pool + Sleep": 0.8815395335400661
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_a",
+      "test": "mandelbrot_chunked",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 263.8746968017456,
+            "Parallel + Always Spawn": 41.71578287796467,
+            "Parallel + Thread Pool + Spin": 43.84826493631038,
+            "Parallel + Thread Pool + Sleep": 54.619797660327066
+          },
+          {
+            "Serial": 247.6894930921904,
+            "Parallel + Always Spawn": 38.86369995999284,
+            "Parallel + Thread Pool + Spin": 38.02977279319299,
+            "Parallel + Thread Pool + Sleep": 49.622379291454955
+          },
+          {
+            "Serial": 245.0049503971344,
+            "Parallel + Always Spawn": 38.04077290068698,
+            "Parallel + Thread Pool + Spin": 37.51886288712851,
+            "Parallel + Thread Pool + Sleep": 58.50269191152089
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 247.282,
+            "Parallel + Always Spawn": 40.502,
+            "Parallel + Thread Pool + Spin": 39.404,
+            "Parallel + Thread Pool + Sleep": 55.0
+          },
+          {
+            "Serial": 247.639,
+            "Parallel + Always Spawn": 38.62,
+            "Parallel + Thread Pool + Spin": 38.961,
+            "Parallel + Thread Pool + Sleep": 54.652
+          },
+          {
+            "Serial": 250.791,
+            "Parallel + Always Spawn": 39.782,
+            "Parallel + Thread Pool + Spin": 38.158,
+            "Parallel + Thread Pool + Sleep": 54.699
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 245.0049503971344,
+          "Parallel + Always Spawn": 38.04077290068698,
+          "Parallel + Thread Pool + Spin": 37.51886288712851,
+          "Parallel + Thread Pool + Sleep": 49.622379291454955
+        },
+        "gcc9": {
+          "Serial": 247.282,
+          "Parallel + Always Spawn": 38.62,
+          "Parallel + Thread Pool + Spin": 38.158,
+          "Parallel + Thread Pool + Sleep": 54.652
+        }
+      },
+      "reference_corrections": [
+        0.5743285909899588,
+        0.17269148204594081,
+        0.13361751499192825
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Always Spawn": 1.0152264808295353,
+        "Parallel + Thread Pool + Spin": 1.0170350875183574,
+        "Parallel + Thread Pool + Sleep": 1.1013579110949876
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "super_super_light",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 3.3231351100005133,
+            "Parallel + Always Spawn": 41.647770752205986,
+            "Parallel + Thread Pool + Spin": 13.377287270987084,
+            "Parallel + Thread Pool + Sleep": 11.986379907445269
+          },
+          {
+            "Serial": 6.623996874315698,
+            "Parallel + Always Spawn": 44.09891131379646,
+            "Parallel + Thread Pool + Spin": 14.943675414441124,
+            "Parallel + Thread Pool + Sleep": 12.405572104555407
+          },
+          {
+            "Serial": 4.381543897375187,
+            "Parallel + Always Spawn": 44.12591152626739,
+            "Parallel + Thread Pool + Spin": 14.330464357983427,
+            "Parallel + Thread Pool + Sleep": 12.655637421913628
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 8.278,
+            "Parallel + Always Spawn": 3.926,
+            "Parallel + Thread Pool + Spin": 3.956,
+            "Parallel + Thread Pool + Sleep": 10.834
+          },
+          {
+            "Serial": 4.03,
+            "Parallel + Always Spawn": 4.09,
+            "Parallel + Thread Pool + Spin": 3.995,
+            "Parallel + Thread Pool + Sleep": 11.358
+          },
+          {
+            "Serial": 5.345,
+            "Parallel + Always Spawn": 4.15,
+            "Parallel + Thread Pool + Spin": 4.035,
+            "Parallel + Thread Pool + Sleep": 10.857
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 3.3231351100005133,
+          "Parallel + Always Spawn": 41.647770752205986,
+          "Parallel + Thread Pool + Spin": 13.377287270987084,
+          "Parallel + Thread Pool + Sleep": 11.986379907445269
+        },
+        "gcc9": {
+          "Serial": 4.03,
+          "Parallel + Always Spawn": 3.926,
+          "Parallel + Thread Pool + Spin": 3.956,
+          "Parallel + Thread Pool + Sleep": 10.834
+        }
+      },
+      "reference_corrections": [
+        1.0593353873128828,
+        0.17481254286698242,
+        0.4312118784937691
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.9038592205199941
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "super_super_light_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 4.5191911428097615,
+            "Parallel + Always Spawn": 46.3406292724123,
+            "Parallel + Thread Pool + Spin": 13.462973135368076,
+            "Parallel + Thread Pool + Sleep": 13.330532725082383
+          },
+          {
+            "Serial": 6.290419308935659,
+            "Parallel + Always Spawn": 46.0107367870612,
+            "Parallel + Thread Pool + Spin": 13.80832645194636,
+            "Parallel + Thread Pool + Sleep": 11.6067982124006
+          },
+          {
+            "Serial": 9.029280295300785,
+            "Parallel + Always Spawn": 40.13260876012441,
+            "Parallel + Thread Pool + Spin": 11.383400092801455,
+            "Parallel + Thread Pool + Sleep": 11.63452269863048
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 7.486,
+            "Parallel + Always Spawn": 4.258,
+            "Parallel + Thread Pool + Spin": 4.299,
+            "Parallel + Thread Pool + Sleep": 10.722
+          },
+          {
+            "Serial": 5.987,
+            "Parallel + Always Spawn": 3.969,
+            "Parallel + Thread Pool + Spin": 3.853,
+            "Parallel + Thread Pool + Sleep": 10.703
+          },
+          {
+            "Serial": 12.107,
+            "Parallel + Always Spawn": 3.666,
+            "Parallel + Thread Pool + Spin": 3.628,
+            "Parallel + Thread Pool + Sleep": 9.036
+          }
+        ],
+        "current": [
+          {
+            "Serial": 4.377,
+            "Parallel + Always Spawn": 4.321,
+            "Parallel + Thread Pool + Spin": 5.255,
+            "Parallel + Thread Pool + Sleep": 12.648
+          },
+          {
+            "Serial": 5.321,
+            "Parallel + Always Spawn": 3.66,
+            "Parallel + Thread Pool + Spin": 3.61,
+            "Parallel + Thread Pool + Sleep": 9.497
+          },
+          {
+            "Serial": 8.725,
+            "Parallel + Always Spawn": 3.403,
+            "Parallel + Thread Pool + Spin": 3.444,
+            "Parallel + Thread Pool + Sleep": 8.801
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 4.5191911428097615,
+          "Parallel + Always Spawn": 40.13260876012441,
+          "Parallel + Thread Pool + Spin": 11.383400092801455,
+          "Parallel + Thread Pool + Sleep": 11.6067982124006
+        },
+        "gcc9": {
+          "Serial": 5.987,
+          "Parallel + Always Spawn": 3.666,
+          "Parallel + Thread Pool + Spin": 3.628,
+          "Parallel + Thread Pool + Sleep": 9.036
+        },
+        "current": {
+          "Serial": 4.377,
+          "Parallel + Always Spawn": 3.403,
+          "Parallel + Thread Pool + Spin": 3.444,
+          "Parallel + Thread Pool + Sleep": 8.801
+        }
+      },
+      "reference_corrections": [
+        0.9009551720115155,
+        0.18233627957145596,
+        1.2370571715715557
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.778509269709369
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "super_light",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 46.63967738493378,
+            "Parallel + Always Spawn": 38.758508378983166,
+            "Parallel + Thread Pool + Spin": 14.775861318471778,
+            "Parallel + Thread Pool + Sleep": 14.831807048136787
+          },
+          {
+            "Serial": 36.90514254581561,
+            "Parallel + Always Spawn": 36.65401647476199,
+            "Parallel + Thread Pool + Spin": 16.321647186709416,
+            "Parallel + Thread Pool + Sleep": 15.708864203469425
+          },
+          {
+            "Serial": 41.114512595890034,
+            "Parallel + Always Spawn": 39.19466947923882,
+            "Parallel + Thread Pool + Spin": 15.20939543543822,
+            "Parallel + Thread Pool + Sleep": 13.98141067598446
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 42.579,
+            "Parallel + Always Spawn": 38.718,
+            "Parallel + Thread Pool + Spin": 36.765,
+            "Parallel + Thread Pool + Sleep": 14.304
+          },
+          {
+            "Serial": 46.585,
+            "Parallel + Always Spawn": 39.953,
+            "Parallel + Thread Pool + Spin": 37.762,
+            "Parallel + Thread Pool + Sleep": 10.491
+          },
+          {
+            "Serial": 44.443,
+            "Parallel + Always Spawn": 39.308,
+            "Parallel + Thread Pool + Spin": 37.59,
+            "Parallel + Thread Pool + Sleep": 11.011
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 36.90514254581561,
+          "Parallel + Always Spawn": 36.65401647476199,
+          "Parallel + Thread Pool + Spin": 14.775861318471778,
+          "Parallel + Thread Pool + Sleep": 13.98141067598446
+        },
+        "gcc9": {
+          "Serial": 42.579,
+          "Parallel + Always Spawn": 38.718,
+          "Parallel + Thread Pool + Spin": 36.765,
+          "Parallel + Thread Pool + Sleep": 10.491
+        }
+      },
+      "reference_corrections": [
+        0.2475474763938377,
+        0.22106168226551023,
+        1.276491433943619
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7503534688398892
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "super_light_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 45.58159539925871,
+            "Parallel + Always Spawn": 37.596979180372806,
+            "Parallel + Thread Pool + Spin": 12.569732681885013,
+            "Parallel + Thread Pool + Sleep": 13.33940772528816
+          },
+          {
+            "Serial": 39.18971373737438,
+            "Parallel + Always Spawn": 36.919464413556874,
+            "Parallel + Thread Pool + Spin": 12.585886842945536,
+            "Parallel + Thread Pool + Sleep": 13.391720173851537
+          },
+          {
+            "Serial": 38.08946952074167,
+            "Parallel + Always Spawn": 36.68347513216299,
+            "Parallel + Thread Pool + Spin": 12.845020529502206,
+            "Parallel + Thread Pool + Sleep": 12.683511430506499
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 43.232,
+            "Parallel + Always Spawn": 38.72,
+            "Parallel + Thread Pool + Spin": 36.893,
+            "Parallel + Thread Pool + Sleep": 9.632
+          },
+          {
+            "Serial": 43.879,
+            "Parallel + Always Spawn": 39.754,
+            "Parallel + Thread Pool + Spin": 36.902,
+            "Parallel + Thread Pool + Sleep": 9.04
+          },
+          {
+            "Serial": 47.211,
+            "Parallel + Always Spawn": 38.231,
+            "Parallel + Thread Pool + Spin": 36.785,
+            "Parallel + Thread Pool + Sleep": 9.355
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 38.08946952074167,
+          "Parallel + Always Spawn": 36.68347513216299,
+          "Parallel + Thread Pool + Spin": 12.569732681885013,
+          "Parallel + Thread Pool + Sleep": 12.683511430506499
+        },
+        "gcc9": {
+          "Serial": 43.232,
+          "Parallel + Always Spawn": 38.231,
+          "Parallel + Thread Pool + Spin": 36.785,
+          "Parallel + Thread Pool + Sleep": 9.04
+        }
+      },
+      "reference_corrections": [
+        1.219770274806891,
+        1.6181392186867494,
+        0.7210227633736853
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7127363782128115
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "ping_pong_equal",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 592.6223781868994,
+            "Parallel + Always Spawn": 167.85009005677847,
+            "Parallel + Thread Pool + Spin": 127.57055719485487,
+            "Parallel + Thread Pool + Sleep": 147.01869738682123
+          },
+          {
+            "Serial": 592.0060324071756,
+            "Parallel + Always Spawn": 142.18021068646354,
+            "Parallel + Thread Pool + Spin": 120.29631007302886,
+            "Parallel + Thread Pool + Sleep": 172.9094386299644
+          },
+          {
+            "Serial": 592.5712010347953,
+            "Parallel + Always Spawn": 143.1863064904827,
+            "Parallel + Thread Pool + Spin": 123.6607425873917,
+            "Parallel + Thread Pool + Sleep": 148.32932247436088
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 607.539,
+            "Parallel + Always Spawn": 609.912,
+            "Parallel + Thread Pool + Spin": 591.397,
+            "Parallel + Thread Pool + Sleep": 107.344
+          },
+          {
+            "Serial": 610.774,
+            "Parallel + Always Spawn": 610.182,
+            "Parallel + Thread Pool + Spin": 594.532,
+            "Parallel + Thread Pool + Sleep": 109.081
+          },
+          {
+            "Serial": 611.602,
+            "Parallel + Always Spawn": 608.061,
+            "Parallel + Thread Pool + Spin": 589.705,
+            "Parallel + Thread Pool + Sleep": 108.299
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 592.0060324071756,
+          "Parallel + Always Spawn": 142.18021068646354,
+          "Parallel + Thread Pool + Spin": 120.29631007302886,
+          "Parallel + Thread Pool + Sleep": 147.01869738682123
+        },
+        "gcc9": {
+          "Serial": 607.539,
+          "Parallel + Always Spawn": 608.061,
+          "Parallel + Thread Pool + Spin": 589.705,
+          "Parallel + Thread Pool + Sleep": 107.344
+        }
+      },
+      "reference_corrections": [
+        0.3896485853495425,
+        0.7080793571939,
+        0.29053304620258646
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7301384239418675
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "ping_pong_equal_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 565.3699376455339,
+            "Parallel + Always Spawn": 139.76973807102038,
+            "Parallel + Thread Pool + Spin": 125.31691331288783,
+            "Parallel + Thread Pool + Sleep": 143.31884485532908
+          },
+          {
+            "Serial": 567.8475152165518,
+            "Parallel + Always Spawn": 138.50148489855243,
+            "Parallel + Thread Pool + Spin": 126.01394162176256,
+            "Parallel + Thread Pool + Sleep": 145.7972355131071
+          },
+          {
+            "Serial": 607.100065375631,
+            "Parallel + Always Spawn": 136.58235830953706,
+            "Parallel + Thread Pool + Spin": 125.11614848482168,
+            "Parallel + Thread Pool + Sleep": 149.23495300514966
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 591.265,
+            "Parallel + Always Spawn": 610.926,
+            "Parallel + Thread Pool + Spin": 592.377,
+            "Parallel + Thread Pool + Sleep": 97.404
+          },
+          {
+            "Serial": 573.189,
+            "Parallel + Always Spawn": 582.07,
+            "Parallel + Thread Pool + Spin": 565.079,
+            "Parallel + Thread Pool + Sleep": 112.938
+          },
+          {
+            "Serial": 607.124,
+            "Parallel + Always Spawn": 606.344,
+            "Parallel + Thread Pool + Spin": 591.819,
+            "Parallel + Thread Pool + Sleep": 96.962
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 565.3699376455339,
+          "Parallel + Always Spawn": 136.58235830953706,
+          "Parallel + Thread Pool + Spin": 125.11614848482168,
+          "Parallel + Thread Pool + Sleep": 143.31884485532908
+        },
+        "gcc9": {
+          "Serial": 573.189,
+          "Parallel + Always Spawn": 582.07,
+          "Parallel + Thread Pool + Spin": 565.079,
+          "Parallel + Thread Pool + Sleep": 96.962
+        }
+      },
+      "reference_corrections": [
+        0.15153523693730678,
+        0.8012025713325993,
+        0.133301670887329
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.676547456811257
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "ping_pong_unequal",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 1055.4129172088149,
+            "Parallel + Always Spawn": 216.81408009103419,
+            "Parallel + Thread Pool + Spin": 226.39163011134238,
+            "Parallel + Thread Pool + Sleep": 242.70499194650907
+          },
+          {
+            "Serial": 1059.7668044756913,
+            "Parallel + Always Spawn": 236.51576904750812,
+            "Parallel + Thread Pool + Spin": 215.5027323699812,
+            "Parallel + Thread Pool + Sleep": 260.6300115323929
+          },
+          {
+            "Serial": 1066.0971169829727,
+            "Parallel + Always Spawn": 252.72062523404233,
+            "Parallel + Thread Pool + Spin": 221.90174843139212,
+            "Parallel + Thread Pool + Sleep": 239.53210872477842
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 1109.838,
+            "Parallel + Always Spawn": 1093.329,
+            "Parallel + Thread Pool + Spin": 1087.838,
+            "Parallel + Thread Pool + Sleep": 192.921
+          },
+          {
+            "Serial": 1117.088,
+            "Parallel + Always Spawn": 1092.779,
+            "Parallel + Thread Pool + Spin": 1092.135,
+            "Parallel + Thread Pool + Sleep": 176.584
+          },
+          {
+            "Serial": 1126.162,
+            "Parallel + Always Spawn": 1091.342,
+            "Parallel + Thread Pool + Spin": 1088.894,
+            "Parallel + Thread Pool + Sleep": 189.397
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 1055.4129172088149,
+          "Parallel + Always Spawn": 216.81408009103419,
+          "Parallel + Thread Pool + Spin": 215.5027323699812,
+          "Parallel + Thread Pool + Sleep": 239.53210872477842
+        },
+        "gcc9": {
+          "Serial": 1109.838,
+          "Parallel + Always Spawn": 1091.342,
+          "Parallel + Thread Pool + Spin": 1087.838,
+          "Parallel + Thread Pool + Sleep": 176.584
+        }
+      },
+      "reference_corrections": [
+        0.5407684501331486,
+        0.7397914616788803,
+        0.1971436591417363
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7372038802651482
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "ping_pong_unequal_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 1059.4930652570224,
+            "Parallel + Always Spawn": 228.1496940001308,
+            "Parallel + Thread Pool + Spin": 222.6342659273511,
+            "Parallel + Thread Pool + Sleep": 241.46935485855707
+          },
+          {
+            "Serial": 1076.681745649504,
+            "Parallel + Always Spawn": 231.17824806394773,
+            "Parallel + Thread Pool + Spin": 221.43321566908003,
+            "Parallel + Thread Pool + Sleep": 240.472029384351
+          },
+          {
+            "Serial": 1084.865604337624,
+            "Parallel + Always Spawn": 226.23336236146292,
+            "Parallel + Thread Pool + Spin": 222.857861701478,
+            "Parallel + Thread Pool + Sleep": 239.5445787380953
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 1108.42,
+            "Parallel + Always Spawn": 1098.203,
+            "Parallel + Thread Pool + Spin": 1090.29,
+            "Parallel + Thread Pool + Sleep": 173.947
+          },
+          {
+            "Serial": 1108.29,
+            "Parallel + Always Spawn": 1135.313,
+            "Parallel + Thread Pool + Spin": 1061.978,
+            "Parallel + Thread Pool + Sleep": 186.951
+          },
+          {
+            "Serial": 1108.72,
+            "Parallel + Always Spawn": 1089.008,
+            "Parallel + Thread Pool + Spin": 1084.685,
+            "Parallel + Thread Pool + Sleep": 172.951
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 1059.4930652570224,
+          "Parallel + Always Spawn": 226.23336236146292,
+          "Parallel + Thread Pool + Spin": 221.43321566908003,
+          "Parallel + Thread Pool + Sleep": 239.5445787380953
+        },
+        "gcc9": {
+          "Serial": 1108.29,
+          "Parallel + Always Spawn": 1089.008,
+          "Parallel + Thread Pool + Spin": 1061.978,
+          "Parallel + Thread Pool + Sleep": 172.951
+        }
+      },
+      "reference_corrections": [
+        0.183060442523141,
+        1.6590113031780211,
+        0.1336038258454351
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7219992241573331
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "recursive_fibonacci",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 941.5887766949871,
+            "Parallel + Always Spawn": 167.81700241100503,
+            "Parallel + Thread Pool + Spin": 212.7709632285427,
+            "Parallel + Thread Pool + Sleep": 216.13643124407932
+          },
+          {
+            "Serial": 980.1992262515726,
+            "Parallel + Always Spawn": 191.63440091176062,
+            "Parallel + Thread Pool + Spin": 224.90125149746584,
+            "Parallel + Thread Pool + Sleep": 239.74792031489858
+          },
+          {
+            "Serial": 957.8667882290544,
+            "Parallel + Always Spawn": 187.33894210644596,
+            "Parallel + Thread Pool + Spin": 220.67084211009254,
+            "Parallel + Thread Pool + Sleep": 224.89518875213687
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 941.315,
+            "Parallel + Always Spawn": 895.346,
+            "Parallel + Thread Pool + Spin": 894.378,
+            "Parallel + Thread Pool + Sleep": 168.355
+          },
+          {
+            "Serial": 935.846,
+            "Parallel + Always Spawn": 865.063,
+            "Parallel + Thread Pool + Spin": 870.944,
+            "Parallel + Thread Pool + Sleep": 169.113
+          },
+          {
+            "Serial": 925.63,
+            "Parallel + Always Spawn": 885.05,
+            "Parallel + Thread Pool + Spin": 875.185,
+            "Parallel + Thread Pool + Sleep": 168.448
+          }
+        ],
+        "current": [
+          {
+            "Serial": 587.485,
+            "Parallel + Always Spawn": 552.014,
+            "Parallel + Thread Pool + Spin": 548.442,
+            "Parallel + Thread Pool + Sleep": 116.47
+          },
+          {
+            "Serial": 612.684,
+            "Parallel + Always Spawn": 575.438,
+            "Parallel + Thread Pool + Spin": 575.01,
+            "Parallel + Thread Pool + Sleep": 105.484
+          },
+          {
+            "Serial": 589.466,
+            "Parallel + Always Spawn": 551.724,
+            "Parallel + Thread Pool + Spin": 549.835,
+            "Parallel + Thread Pool + Sleep": 114.681
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 941.5887766949871,
+          "Parallel + Always Spawn": 167.81700241100503,
+          "Parallel + Thread Pool + Spin": 212.7709632285427,
+          "Parallel + Thread Pool + Sleep": 216.13643124407932
+        },
+        "gcc9": {
+          "Serial": 925.63,
+          "Parallel + Always Spawn": 865.063,
+          "Parallel + Thread Pool + Spin": 870.944,
+          "Parallel + Thread Pool + Sleep": 168.355
+        },
+        "current": {
+          "Serial": 587.485,
+          "Parallel + Always Spawn": 551.724,
+          "Parallel + Thread Pool + Spin": 548.442,
+          "Parallel + Thread Pool + Sleep": 105.484
+        }
+      },
+      "reference_corrections": [
+        0.15037837424202824,
+        1.1561025399028748,
+        0.14807201942039122
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7789293041943468
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "recursive_fibonacci_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 987.5252707034193,
+            "Parallel + Always Spawn": 192.04546468817455,
+            "Parallel + Thread Pool + Spin": 215.1879620045119,
+            "Parallel + Thread Pool + Sleep": 211.44268604501943
+          },
+          {
+            "Serial": 964.0481450603554,
+            "Parallel + Always Spawn": 189.59104191846419,
+            "Parallel + Thread Pool + Spin": 215.9476576266749,
+            "Parallel + Thread Pool + Sleep": 215.4641601419452
+          },
+          {
+            "Serial": 994.6222914539272,
+            "Parallel + Always Spawn": 193.1748587714711,
+            "Parallel + Thread Pool + Spin": 204.07322375800888,
+            "Parallel + Thread Pool + Sleep": 213.06599623279965
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 925.337,
+            "Parallel + Always Spawn": 864.148,
+            "Parallel + Thread Pool + Spin": 891.54,
+            "Parallel + Thread Pool + Sleep": 172.319
+          },
+          {
+            "Serial": 926.307,
+            "Parallel + Always Spawn": 872.18,
+            "Parallel + Thread Pool + Spin": 868.086,
+            "Parallel + Thread Pool + Sleep": 165.058
+          },
+          {
+            "Serial": 926.628,
+            "Parallel + Always Spawn": 873.143,
+            "Parallel + Thread Pool + Spin": 867.493,
+            "Parallel + Thread Pool + Sleep": 161.554
+          }
+        ],
+        "current": [
+          {
+            "Serial": 621.004,
+            "Parallel + Always Spawn": 573.952,
+            "Parallel + Thread Pool + Spin": 571.91,
+            "Parallel + Thread Pool + Sleep": 89.697
+          },
+          {
+            "Serial": 607.289,
+            "Parallel + Always Spawn": 552.586,
+            "Parallel + Thread Pool + Spin": 550.324,
+            "Parallel + Thread Pool + Sleep": 102.152
+          },
+          {
+            "Serial": 603.485,
+            "Parallel + Always Spawn": 571.583,
+            "Parallel + Thread Pool + Spin": 570.947,
+            "Parallel + Thread Pool + Sleep": 88.098
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 964.0481450603554,
+          "Parallel + Always Spawn": 189.59104191846419,
+          "Parallel + Thread Pool + Spin": 204.07322375800888,
+          "Parallel + Thread Pool + Sleep": 211.44268604501943
+        },
+        "gcc9": {
+          "Serial": 925.337,
+          "Parallel + Always Spawn": 864.148,
+          "Parallel + Thread Pool + Spin": 867.493,
+          "Parallel + Thread Pool + Sleep": 161.554
+        },
+        "current": {
+          "Serial": 603.485,
+          "Parallel + Always Spawn": 552.586,
+          "Parallel + Thread Pool + Spin": 550.324,
+          "Parallel + Thread Pool + Sleep": 88.098
+        }
+      },
+      "reference_corrections": [
+        0.1336071617969628,
+        1.0914164440850849,
+        0.5639516163797041
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7640557496777289
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "math_operations_in_tight_for_loop",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 346.44470150771434,
+            "Parallel + Always Spawn": 276.03827048691755,
+            "Parallel + Thread Pool + Spin": 147.14928184848665,
+            "Parallel + Thread Pool + Sleep": 123.72625205671199
+          },
+          {
+            "Serial": 361.51198604554327,
+            "Parallel + Always Spawn": 239.78052316131848,
+            "Parallel + Thread Pool + Spin": 138.28499354591716,
+            "Parallel + Thread Pool + Sleep": 121.33926932516125
+          },
+          {
+            "Serial": 358.4542136034912,
+            "Parallel + Always Spawn": 252.44439913100595,
+            "Parallel + Thread Pool + Spin": 132.27761101895484,
+            "Parallel + Thread Pool + Sleep": 120.3816225543624
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 365.574,
+            "Parallel + Always Spawn": 323.367,
+            "Parallel + Thread Pool + Spin": 327.632,
+            "Parallel + Thread Pool + Sleep": 97.043
+          },
+          {
+            "Serial": 379.627,
+            "Parallel + Always Spawn": 344.865,
+            "Parallel + Thread Pool + Spin": 345.643,
+            "Parallel + Thread Pool + Sleep": 93.043
+          },
+          {
+            "Serial": 364.253,
+            "Parallel + Always Spawn": 324.968,
+            "Parallel + Thread Pool + Spin": 333.234,
+            "Parallel + Thread Pool + Sleep": 97.283
+          }
+        ],
+        "current": [
+          {
+            "Serial": 358.555,
+            "Parallel + Always Spawn": 324.306,
+            "Parallel + Thread Pool + Spin": 321.278,
+            "Parallel + Thread Pool + Sleep": 94.596
+          },
+          {
+            "Serial": 345.025,
+            "Parallel + Always Spawn": 323.389,
+            "Parallel + Thread Pool + Spin": 323.844,
+            "Parallel + Thread Pool + Sleep": 94.005
+          },
+          {
+            "Serial": 355.144,
+            "Parallel + Always Spawn": 322.497,
+            "Parallel + Thread Pool + Spin": 319.663,
+            "Parallel + Thread Pool + Sleep": 104.459
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 346.44470150771434,
+          "Parallel + Always Spawn": 239.78052316131848,
+          "Parallel + Thread Pool + Spin": 132.27761101895484,
+          "Parallel + Thread Pool + Sleep": 120.3816225543624
+        },
+        "gcc9": {
+          "Serial": 364.253,
+          "Parallel + Always Spawn": 323.367,
+          "Parallel + Thread Pool + Spin": 327.632,
+          "Parallel + Thread Pool + Sleep": 93.043
+        },
+        "current": {
+          "Serial": 345.025,
+          "Parallel + Always Spawn": 322.497,
+          "Parallel + Thread Pool + Spin": 319.663,
+          "Parallel + Thread Pool + Sleep": 94.005
+        }
+      },
+      "reference_corrections": [
+        0.13360082244440002,
+        0.1334445590553041,
+        0.1339366847327393
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7729003649039811
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "math_operations_in_tight_for_loop_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 354.2156644912497,
+            "Parallel + Always Spawn": 242.79572723364763,
+            "Parallel + Thread Pool + Spin": 124.96978911243747,
+            "Parallel + Thread Pool + Sleep": 103.94262320772123
+          },
+          {
+            "Serial": 357.6400424600937,
+            "Parallel + Always Spawn": 243.156445717734,
+            "Parallel + Thread Pool + Spin": 129.62333797621227,
+            "Parallel + Thread Pool + Sleep": 116.89452811246265
+          },
+          {
+            "Serial": 378.1805052873967,
+            "Parallel + Always Spawn": 249.986180890943,
+            "Parallel + Thread Pool + Spin": 130.9011081182109,
+            "Parallel + Thread Pool + Sleep": 105.46302483668363
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 369.633,
+            "Parallel + Always Spawn": 323.502,
+            "Parallel + Thread Pool + Spin": 327.184,
+            "Parallel + Thread Pool + Sleep": 86.405
+          },
+          {
+            "Serial": 365.845,
+            "Parallel + Always Spawn": 323.981,
+            "Parallel + Thread Pool + Spin": 332.223,
+            "Parallel + Thread Pool + Sleep": 95.213
+          },
+          {
+            "Serial": 377.398,
+            "Parallel + Always Spawn": 343.094,
+            "Parallel + Thread Pool + Spin": 347.486,
+            "Parallel + Thread Pool + Sleep": 78.524
+          }
+        ],
+        "current": [
+          {
+            "Serial": 354.515,
+            "Parallel + Always Spawn": 337.912,
+            "Parallel + Thread Pool + Spin": 343.513,
+            "Parallel + Thread Pool + Sleep": 82.577
+          },
+          {
+            "Serial": 356.458,
+            "Parallel + Always Spawn": 339.487,
+            "Parallel + Thread Pool + Spin": 340.396,
+            "Parallel + Thread Pool + Sleep": 77.647
+          },
+          {
+            "Serial": 350.712,
+            "Parallel + Always Spawn": 340.21,
+            "Parallel + Thread Pool + Spin": 337.498,
+            "Parallel + Thread Pool + Sleep": 89.183
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 354.2156644912497,
+          "Parallel + Always Spawn": 242.79572723364763,
+          "Parallel + Thread Pool + Spin": 124.96978911243747,
+          "Parallel + Thread Pool + Sleep": 103.94262320772123
+        },
+        "gcc9": {
+          "Serial": 365.845,
+          "Parallel + Always Spawn": 323.502,
+          "Parallel + Thread Pool + Spin": 327.184,
+          "Parallel + Thread Pool + Sleep": 78.524
+        },
+        "current": {
+          "Serial": 350.712,
+          "Parallel + Always Spawn": 337.912,
+          "Parallel + Thread Pool + Spin": 337.498,
+          "Parallel + Thread Pool + Sleep": 77.647
+        }
+      },
+      "reference_corrections": [
+        0.24042037393912905,
+        0.13349564618510357,
+        0.31930915674851607
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7554552461416709
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "math_operations_in_tight_for_loop_fewer_tasks",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 351.81958686123585,
+            "Parallel + Always Spawn": 265.84971078040763,
+            "Parallel + Thread Pool + Spin": 132.6676120768215,
+            "Parallel + Thread Pool + Sleep": 127.30123426596612
+          },
+          {
+            "Serial": 357.95177734465415,
+            "Parallel + Always Spawn": 270.64791570621554,
+            "Parallel + Thread Pool + Spin": 133.72699056909588,
+            "Parallel + Thread Pool + Sleep": 128.8157935111333
+          },
+          {
+            "Serial": 359.57768712173623,
+            "Parallel + Always Spawn": 264.6074819712213,
+            "Parallel + Thread Pool + Spin": 135.92188544365732,
+            "Parallel + Thread Pool + Sleep": 129.4180279742772
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 372.977,
+            "Parallel + Always Spawn": 333.043,
+            "Parallel + Thread Pool + Spin": 329.14,
+            "Parallel + Thread Pool + Sleep": 104.469
+          },
+          {
+            "Serial": 368.683,
+            "Parallel + Always Spawn": 347.994,
+            "Parallel + Thread Pool + Spin": 347.089,
+            "Parallel + Thread Pool + Sleep": 105.461
+          },
+          {
+            "Serial": 375.304,
+            "Parallel + Always Spawn": 348.868,
+            "Parallel + Thread Pool + Spin": 348.218,
+            "Parallel + Thread Pool + Sleep": 105.023
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 351.81958686123585,
+          "Parallel + Always Spawn": 264.6074819712213,
+          "Parallel + Thread Pool + Spin": 132.6676120768215,
+          "Parallel + Thread Pool + Sleep": 127.30123426596612
+        },
+        "gcc9": {
+          "Serial": 368.683,
+          "Parallel + Always Spawn": 333.043,
+          "Parallel + Thread Pool + Spin": 329.14,
+          "Parallel + Thread Pool + Sleep": 104.469
+        }
+      },
+      "reference_corrections": [
+        0.2543186489197378,
+        0.13358712484937857,
+        0.1337774331896276
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.8206440464020678
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "math_operations_in_tight_for_loop_fewer_tasks_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 367.7006000506162,
+            "Parallel + Always Spawn": 271.7170112923402,
+            "Parallel + Thread Pool + Spin": 78.85399780923298,
+            "Parallel + Thread Pool + Sleep": 79.09251346759132
+          },
+          {
+            "Serial": 353.90583225826947,
+            "Parallel + Always Spawn": 264.735747483171,
+            "Parallel + Thread Pool + Spin": 82.67942692752082,
+            "Parallel + Thread Pool + Sleep": 78.92710100077561
+          },
+          {
+            "Serial": 357.1555802172139,
+            "Parallel + Always Spawn": 263.24109617262735,
+            "Parallel + Thread Pool + Spin": 79.4300322875538,
+            "Parallel + Thread Pool + Sleep": 86.26844937001628
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 370.52,
+            "Parallel + Always Spawn": 328.342,
+            "Parallel + Thread Pool + Spin": 323.082,
+            "Parallel + Thread Pool + Sleep": 59.676
+          },
+          {
+            "Serial": 375.764,
+            "Parallel + Always Spawn": 346.902,
+            "Parallel + Thread Pool + Spin": 345.307,
+            "Parallel + Thread Pool + Sleep": 57.602
+          },
+          {
+            "Serial": 371.506,
+            "Parallel + Always Spawn": 342.119,
+            "Parallel + Thread Pool + Spin": 348.125,
+            "Parallel + Thread Pool + Sleep": 63.557
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 353.90583225826947,
+          "Parallel + Always Spawn": 263.24109617262735,
+          "Parallel + Thread Pool + Spin": 78.85399780923298,
+          "Parallel + Thread Pool + Sleep": 78.92710100077561
+        },
+        "gcc9": {
+          "Serial": 370.52,
+          "Parallel + Always Spawn": 328.342,
+          "Parallel + Thread Pool + Spin": 323.082,
+          "Parallel + Thread Pool + Sleep": 57.602
+        }
+      },
+      "reference_corrections": [
+        0.1335474010964947,
+        0.5481048680609417,
+        0.13366726118964958
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7298126913268226
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "math_operations_in_tight_for_loop_fan_in",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 199.45284510372807,
+            "Parallel + Always Spawn": 66.17980662769853,
+            "Parallel + Thread Pool + Spin": 46.825525056410484,
+            "Parallel + Thread Pool + Sleep": 54.511540373898534
+          },
+          {
+            "Serial": 187.18170099062527,
+            "Parallel + Always Spawn": 57.32401637427499,
+            "Parallel + Thread Pool + Spin": 47.56012688456029,
+            "Parallel + Thread Pool + Sleep": 55.53284062789679
+          },
+          {
+            "Serial": 188.4110744261217,
+            "Parallel + Always Spawn": 55.270455315876596,
+            "Parallel + Thread Pool + Spin": 47.850412654180964,
+            "Parallel + Thread Pool + Sleep": 50.18390954207848
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 212.695,
+            "Parallel + Always Spawn": 176.289,
+            "Parallel + Thread Pool + Spin": 169.139,
+            "Parallel + Thread Pool + Sleep": 36.623
+          },
+          {
+            "Serial": 203.779,
+            "Parallel + Always Spawn": 174.004,
+            "Parallel + Thread Pool + Spin": 168.316,
+            "Parallel + Thread Pool + Sleep": 33.928
+          },
+          {
+            "Serial": 203.838,
+            "Parallel + Always Spawn": 174.851,
+            "Parallel + Thread Pool + Spin": 167.246,
+            "Parallel + Thread Pool + Sleep": 33.626
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 187.18170099062527,
+          "Parallel + Always Spawn": 55.270455315876596,
+          "Parallel + Thread Pool + Spin": 46.825525056410484,
+          "Parallel + Thread Pool + Sleep": 50.18390954207848
+        },
+        "gcc9": {
+          "Serial": 203.779,
+          "Parallel + Always Spawn": 174.004,
+          "Parallel + Thread Pool + Spin": 167.246,
+          "Parallel + Thread Pool + Sleep": 33.626
+        }
+      },
+      "reference_corrections": [
+        0.1335026630564867,
+        0.6392490172655952,
+        0.596802273119571
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.6700554083337227
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "math_operations_in_tight_for_loop_fan_in_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 185.0299325433108,
+            "Parallel + Always Spawn": 55.71943735962007,
+            "Parallel + Thread Pool + Spin": 37.249943066065434,
+            "Parallel + Thread Pool + Sleep": 40.86422556059918
+          },
+          {
+            "Serial": 184.93000173988997,
+            "Parallel + Always Spawn": 53.771121229697464,
+            "Parallel + Thread Pool + Spin": 37.97590940196325,
+            "Parallel + Thread Pool + Sleep": 41.32874969896633
+          },
+          {
+            "Serial": 182.56747177732294,
+            "Parallel + Always Spawn": 59.03680065874002,
+            "Parallel + Thread Pool + Spin": 37.71210557996215,
+            "Parallel + Thread Pool + Sleep": 35.5654601114432
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 206.312,
+            "Parallel + Always Spawn": 177.417,
+            "Parallel + Thread Pool + Spin": 178.643,
+            "Parallel + Thread Pool + Sleep": 29.299
+          },
+          {
+            "Serial": 204.272,
+            "Parallel + Always Spawn": 171.416,
+            "Parallel + Thread Pool + Spin": 165.658,
+            "Parallel + Thread Pool + Sleep": 28.409
+          },
+          {
+            "Serial": 210.281,
+            "Parallel + Always Spawn": 171.689,
+            "Parallel + Thread Pool + Spin": 164.644,
+            "Parallel + Thread Pool + Sleep": 29.678
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 182.56747177732294,
+          "Parallel + Always Spawn": 53.771121229697464,
+          "Parallel + Thread Pool + Spin": 37.249943066065434,
+          "Parallel + Thread Pool + Sleep": 35.5654601114432
+        },
+        "gcc9": {
+          "Serial": 204.272,
+          "Parallel + Always Spawn": 171.416,
+          "Parallel + Thread Pool + Spin": 164.644,
+          "Parallel + Thread Pool + Sleep": 28.409
+        }
+      },
+      "reference_corrections": [
+        1.502195550512781,
+        0.13341451979639007,
+        1.3500914896345595
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7987806121720717
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "math_operations_in_tight_for_loop_reduction_tree",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 180.32526641120404,
+            "Parallel + Always Spawn": 43.57603753162477,
+            "Parallel + Thread Pool + Spin": 37.25577040268325,
+            "Parallel + Thread Pool + Sleep": 50.89696826622016
+          },
+          {
+            "Serial": 177.9407518904057,
+            "Parallel + Always Spawn": 39.981800951227,
+            "Parallel + Thread Pool + Spin": 40.188228582742916,
+            "Parallel + Thread Pool + Sleep": 48.67900030854918
+          },
+          {
+            "Serial": 175.1264528627192,
+            "Parallel + Always Spawn": 41.396846284403,
+            "Parallel + Thread Pool + Spin": 38.324961329899565,
+            "Parallel + Thread Pool + Sleep": 46.245890285688056
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 196.082,
+            "Parallel + Always Spawn": 173.083,
+            "Parallel + Thread Pool + Spin": 173.273,
+            "Parallel + Thread Pool + Sleep": 35.814
+          },
+          {
+            "Serial": 196.828,
+            "Parallel + Always Spawn": 173.435,
+            "Parallel + Thread Pool + Spin": 172.217,
+            "Parallel + Thread Pool + Sleep": 39.065
+          },
+          {
+            "Serial": 200.094,
+            "Parallel + Always Spawn": 173.524,
+            "Parallel + Thread Pool + Spin": 172.192,
+            "Parallel + Thread Pool + Sleep": 39.963
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 175.1264528627192,
+          "Parallel + Always Spawn": 39.981800951227,
+          "Parallel + Thread Pool + Spin": 37.25577040268325,
+          "Parallel + Thread Pool + Sleep": 46.245890285688056
+        },
+        "gcc9": {
+          "Serial": 196.082,
+          "Parallel + Always Spawn": 173.083,
+          "Parallel + Thread Pool + Spin": 172.192,
+          "Parallel + Thread Pool + Sleep": 35.814
+        }
+      },
+      "reference_corrections": [
+        0.20158412684405078,
+        0.13352369438286313,
+        1.0744613342089648
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7744255711968321
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "math_operations_in_tight_for_loop_reduction_tree_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 177.7071065828693,
+            "Parallel + Always Spawn": 42.05244253678123,
+            "Parallel + Thread Pool + Spin": 33.024515901442356,
+            "Parallel + Thread Pool + Sleep": 34.09499276568544
+          },
+          {
+            "Serial": 181.3272258495046,
+            "Parallel + Always Spawn": 42.70891073949017,
+            "Parallel + Thread Pool + Spin": 36.008402080902044,
+            "Parallel + Thread Pool + Sleep": 42.263593850151544
+          },
+          {
+            "Serial": 184.15729450502184,
+            "Parallel + Always Spawn": 44.093545030809096,
+            "Parallel + Thread Pool + Spin": 39.03383057900354,
+            "Parallel + Thread Pool + Sleep": 33.77147660234577
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 199.744,
+            "Parallel + Always Spawn": 172.043,
+            "Parallel + Thread Pool + Spin": 166.732,
+            "Parallel + Thread Pool + Sleep": 31.43
+          },
+          {
+            "Serial": 197.165,
+            "Parallel + Always Spawn": 169.412,
+            "Parallel + Thread Pool + Spin": 163.475,
+            "Parallel + Thread Pool + Sleep": 28.35
+          },
+          {
+            "Serial": 203.231,
+            "Parallel + Always Spawn": 169.455,
+            "Parallel + Thread Pool + Spin": 163.715,
+            "Parallel + Thread Pool + Sleep": 27.94
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 177.7071065828693,
+          "Parallel + Always Spawn": 42.05244253678123,
+          "Parallel + Thread Pool + Spin": 33.024515901442356,
+          "Parallel + Thread Pool + Sleep": 33.77147660234577
+        },
+        "gcc9": {
+          "Serial": 197.165,
+          "Parallel + Always Spawn": 169.412,
+          "Parallel + Thread Pool + Spin": 163.475,
+          "Parallel + Thread Pool + Sleep": 27.94
+        }
+      },
+      "reference_corrections": [
+        0.2649039505674551,
+        0.23061465009768123,
+        0.31368347500344385
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.8273253884924678
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "spin_between_run_calls",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 351.452024106438,
+            "Parallel + Always Spawn": 184.23020485527675,
+            "Parallel + Thread Pool + Spin": 250.1858740846622,
+            "Parallel + Thread Pool + Sleep": 218.15503595464503
+          },
+          {
+            "Serial": 352.6312250431956,
+            "Parallel + Always Spawn": 183.89919483214558,
+            "Parallel + Thread Pool + Spin": 325.93822512176905,
+            "Parallel + Thread Pool + Sleep": 214.8071651283217
+          },
+          {
+            "Serial": 356.4563006724112,
+            "Parallel + Always Spawn": 183.52270386661527,
+            "Parallel + Thread Pool + Spin": 351.84462231917973,
+            "Parallel + Thread Pool + Sleep": 216.08136944453543
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 337.173,
+            "Parallel + Always Spawn": 323.953,
+            "Parallel + Thread Pool + Spin": 332.737,
+            "Parallel + Thread Pool + Sleep": 172.251
+          },
+          {
+            "Serial": 335.818,
+            "Parallel + Always Spawn": 335.233,
+            "Parallel + Thread Pool + Spin": 339.815,
+            "Parallel + Thread Pool + Sleep": 175.737
+          },
+          {
+            "Serial": 340.363,
+            "Parallel + Always Spawn": 320.008,
+            "Parallel + Thread Pool + Spin": 320.158,
+            "Parallel + Thread Pool + Sleep": 180.356
+          }
+        ],
+        "current": [
+          {
+            "Serial": 210.275,
+            "Parallel + Always Spawn": 200.627,
+            "Parallel + Thread Pool + Spin": 200.673,
+            "Parallel + Thread Pool + Sleep": 104.993
+          },
+          {
+            "Serial": 207.626,
+            "Parallel + Always Spawn": 202.934,
+            "Parallel + Thread Pool + Spin": 204.996,
+            "Parallel + Thread Pool + Sleep": 107.665
+          },
+          {
+            "Serial": 211.89,
+            "Parallel + Always Spawn": 197.201,
+            "Parallel + Thread Pool + Spin": 197.714,
+            "Parallel + Thread Pool + Sleep": 104.566
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 351.452024106438,
+          "Parallel + Always Spawn": 183.52270386661527,
+          "Parallel + Thread Pool + Spin": 250.1858740846622,
+          "Parallel + Thread Pool + Sleep": 214.8071651283217
+        },
+        "gcc9": {
+          "Serial": 335.818,
+          "Parallel + Always Spawn": 320.008,
+          "Parallel + Thread Pool + Spin": 320.158,
+          "Parallel + Thread Pool + Sleep": 172.251
+        },
+        "current": {
+          "Serial": 207.626,
+          "Parallel + Always Spawn": 197.201,
+          "Parallel + Thread Pool + Spin": 197.714,
+          "Parallel + Thread Pool + Sleep": 104.566
+        }
+      },
+      "reference_corrections": [
+        0.1336338791611582,
+        0.3398347476215078,
+        0.13358278113812663
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.8018866591209867
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "spin_between_run_calls_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 352.989236872768,
+            "Parallel + Always Spawn": 189.76309242725293,
+            "Parallel + Thread Pool + Spin": 251.63150679700792,
+            "Parallel + Thread Pool + Sleep": 220.00543433779922
+          },
+          {
+            "Serial": 339.93000903652415,
+            "Parallel + Always Spawn": 188.57200427547374,
+            "Parallel + Thread Pool + Spin": 347.0119334924029,
+            "Parallel + Thread Pool + Sleep": 214.1801295953398
+          },
+          {
+            "Serial": 345.9786848173951,
+            "Parallel + Always Spawn": 179.10763214883116,
+            "Parallel + Thread Pool + Spin": 261.9425741452089,
+            "Parallel + Thread Pool + Sleep": 217.35930559629548
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 347.644,
+            "Parallel + Always Spawn": 330.208,
+            "Parallel + Thread Pool + Spin": 329.675,
+            "Parallel + Thread Pool + Sleep": 181.95
+          },
+          {
+            "Serial": 337.001,
+            "Parallel + Always Spawn": 318.116,
+            "Parallel + Thread Pool + Spin": 336.468,
+            "Parallel + Thread Pool + Sleep": 185.071
+          },
+          {
+            "Serial": 343.662,
+            "Parallel + Always Spawn": 317.519,
+            "Parallel + Thread Pool + Spin": 313.297,
+            "Parallel + Thread Pool + Sleep": 175.696
+          }
+        ],
+        "current": [
+          {
+            "Serial": 212.795,
+            "Parallel + Always Spawn": 207.324,
+            "Parallel + Thread Pool + Spin": 209.384,
+            "Parallel + Thread Pool + Sleep": 105.031
+          },
+          {
+            "Serial": 213.497,
+            "Parallel + Always Spawn": 208.741,
+            "Parallel + Thread Pool + Spin": 211.088,
+            "Parallel + Thread Pool + Sleep": 107.331
+          },
+          {
+            "Serial": 213.226,
+            "Parallel + Always Spawn": 203.966,
+            "Parallel + Thread Pool + Spin": 205.358,
+            "Parallel + Thread Pool + Sleep": 107.318
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 339.93000903652415,
+          "Parallel + Always Spawn": 179.10763214883116,
+          "Parallel + Thread Pool + Spin": 251.63150679700792,
+          "Parallel + Thread Pool + Sleep": 214.1801295953398
+        },
+        "gcc9": {
+          "Serial": 337.001,
+          "Parallel + Always Spawn": 317.519,
+          "Parallel + Thread Pool + Spin": 313.297,
+          "Parallel + Thread Pool + Sleep": 175.696
+        },
+        "current": {
+          "Serial": 212.795,
+          "Parallel + Always Spawn": 203.966,
+          "Parallel + Thread Pool + Spin": 205.358,
+          "Parallel + Thread Pool + Sleep": 105.031
+        }
+      },
+      "reference_corrections": [
+        0.13315344001755114,
+        0.788281885115621,
+        0.3264045314696893
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.8203188611938483
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "mandelbrot_chunked",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 253.35626799304686,
+            "Parallel + Always Spawn": 37.56458652941137,
+            "Parallel + Thread Pool + Spin": 40.654520268936054,
+            "Parallel + Thread Pool + Sleep": 55.0381925467814
+          },
+          {
+            "Serial": 244.68712015266755,
+            "Parallel + Always Spawn": 37.984223640844384,
+            "Parallel + Thread Pool + Spin": 38.79999525138587,
+            "Parallel + Thread Pool + Sleep": 54.032809675384
+          },
+          {
+            "Serial": 247.53283291948222,
+            "Parallel + Always Spawn": 39.391716413075834,
+            "Parallel + Thread Pool + Spin": 38.452612784765094,
+            "Parallel + Thread Pool + Sleep": 54.38504225975213
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 246.094,
+            "Parallel + Always Spawn": 249.699,
+            "Parallel + Thread Pool + Spin": 243.523,
+            "Parallel + Thread Pool + Sleep": 37.719
+          },
+          {
+            "Serial": 245.546,
+            "Parallel + Always Spawn": 244.252,
+            "Parallel + Thread Pool + Spin": 243.635,
+            "Parallel + Thread Pool + Sleep": 37.859
+          },
+          {
+            "Serial": 250.363,
+            "Parallel + Always Spawn": 245.791,
+            "Parallel + Thread Pool + Spin": 245.498,
+            "Parallel + Thread Pool + Sleep": 39.344
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 244.68712015266755,
+          "Parallel + Always Spawn": 37.56458652941137,
+          "Parallel + Thread Pool + Spin": 38.452612784765094,
+          "Parallel + Thread Pool + Sleep": 54.032809675384
+        },
+        "gcc9": {
+          "Serial": 245.546,
+          "Parallel + Always Spawn": 244.252,
+          "Parallel + Thread Pool + Spin": 243.523,
+          "Parallel + Thread Pool + Sleep": 37.719
+        }
+      },
+      "reference_corrections": [
+        0.1335667735594661,
+        0.13362352343021916,
+        0.13360415824594382
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.6980758584757408
+      },
+      "passed_perf": true
+    },
+    {
+      "part": "part_b",
+      "test": "mandelbrot_chunked_async",
+      "samples_ms": {
+        "reference": [
+          {
+            "Serial": 247.58849307305013,
+            "Parallel + Always Spawn": 38.32143938490768,
+            "Parallel + Thread Pool + Spin": 38.86840356791228,
+            "Parallel + Thread Pool + Sleep": 53.240534582936334
+          },
+          {
+            "Serial": 246.82510173928696,
+            "Parallel + Always Spawn": 38.03599448682318,
+            "Parallel + Thread Pool + Spin": 37.62820378502308,
+            "Parallel + Thread Pool + Sleep": 55.08202092520935
+          },
+          {
+            "Serial": 247.56739963199294,
+            "Parallel + Always Spawn": 39.188490666576676,
+            "Parallel + Thread Pool + Spin": 40.34734091289344,
+            "Parallel + Thread Pool + Sleep": 49.05818461223303
+          }
+        ],
+        "gcc9": [
+          {
+            "Serial": 246.514,
+            "Parallel + Always Spawn": 245.725,
+            "Parallel + Thread Pool + Spin": 244.618,
+            "Parallel + Thread Pool + Sleep": 39.021
+          },
+          {
+            "Serial": 245.895,
+            "Parallel + Always Spawn": 245.889,
+            "Parallel + Thread Pool + Spin": 244.514,
+            "Parallel + Thread Pool + Sleep": 36.523
+          },
+          {
+            "Serial": 245.496,
+            "Parallel + Always Spawn": 244.491,
+            "Parallel + Thread Pool + Spin": 245.048,
+            "Parallel + Thread Pool + Sleep": 38.786
+          }
+        ]
+      },
+      "min_ms": {
+        "reference": {
+          "Serial": 246.82510173928696,
+          "Parallel + Always Spawn": 38.03599448682318,
+          "Parallel + Thread Pool + Spin": 37.62820378502308,
+          "Parallel + Thread Pool + Sleep": 49.05818461223303
+        },
+        "gcc9": {
+          "Serial": 245.496,
+          "Parallel + Always Spawn": 244.491,
+          "Parallel + Thread Pool + Spin": 244.514,
+          "Parallel + Thread Pool + Sleep": 36.523
+        }
+      },
+      "reference_corrections": [
+        0.4243321823154432,
+        0.13396540795009643,
+        0.5725544695240949
+      ],
+      "gcc9_reference_ratios": {
+        "Parallel + Thread Pool + Sleep": 0.7444833168753806
+      },
+      "passed_perf": true
+    }
+  ],
+  "sources_unchanged": true,
+  "seconds_per_tsc_tick": 3.338685007121606e-10,
+  "collected_at_utc": "2026-10-15T03:57:51.215442+00:00",
+  "reference_sha256": {
+    "part_a": "f32ba907e87611e8b84f174167c96641c22ec7010f9937bb42e898909f543ea8",
+    "part_b": "be36dda7fc042f1b26288c8db1277fc18b4a556bfa934bc28a0fadf10dad24e9"
+  },
+  "additional_correctness_checks": [
+    {
+      "compiler": "13.3",
+      "flags": "-O1 -g -D_GLIBCXX_DEBUG -std=c++11 -pthread",
+      "exit_code": 0,
+      "stdout": "PASS n=1: 300 A->B rounds and 50 DAG rounds\nPASS n=2: 300 A->B rounds and 50 DAG rounds\nPASS n=8: 300 A->B rounds and 50 DAG rounds\nPASS idle construction/destruction x30\n"
+    },
+    {
+      "compiler": "9.3",
+      "flags": "-O1 -g -D_GLIBCXX_DEBUG -std=c++11 -pthread",
+      "exit_code": 0,
+      "stdout": "PASS n=1: 300 A->B rounds and 50 DAG rounds\nPASS n=2: 300 A->B rounds and 50 DAG rounds\nPASS n=8: 300 A->B rounds and 50 DAG rounds\nPASS idle construction/destruction x30\n"
+    }
+  ],
+  "additional_check_sha256": "959e7a65fd1546ab5693892c3d79fc6d57490db7d98b6406d6a033b9bad2b0fe"
+}

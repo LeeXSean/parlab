@@ -1,0 +1,1629 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Local implementations, measurements, and performance analysis for CS149 and 15-418.">
+      
+      
+        <meta name="author" content="Xiang Li">
+      
+      
+        <link rel="canonical" href="https://leexsean.github.io/parlab/asst2/measurements/">
+      
+      
+        <link rel="prev" href="../part-b/">
+      
+      
+        <link rel="next" href="../../asst3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>A2 · Measurements - Parallel Lab Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#assignment-2-measurements" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Parallel Lab Notes" class="md-header__button md-logo" aria-label="Parallel Lab Notes" data-md-component="logo">
+      Parallel Lab Notes
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Parallel Lab Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              A2 · Measurements
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LeeXSean/parlab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LeeXSean/parlab
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Parallel Lab Notes" class="md-nav__button md-logo" aria-label="Parallel Lab Notes" data-md-component="logo">
+      Parallel Lab Notes
+    </a>
+    Parallel Lab Notes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LeeXSean/parlab" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LeeXSean/parlab
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assignments
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Assignments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A1 · CPU parallelism
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    A1 · CPU parallelism
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P1 · CPU threads
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P2 · SIMD intrinsics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P3 · ISPC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P4 · Iterative sqrt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P5 · SAXPY
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/p6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P6 · K-means
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst1/measurements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Measurements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A2 · Task system
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    A2 · Task system
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part A · Thread pools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-b/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part B · Task graphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix · Measurements
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix · Measurements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#environment-and-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment and timing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gcc-93-performance-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCC 9.3 performance results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GCC 9.3 performance results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part A
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part B
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-changes-with-the-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What changes with the compiler?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-timer-correction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference timer correction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correctness-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correctness checks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reproduce-the-performance-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproduce the performance measurements
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A3 · CUDA renderer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cmu-asst4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A4 · MPI wire routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asst5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A5 · RK4 kernel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#environment-and-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment and timing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gcc-93-performance-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCC 9.3 performance results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GCC 9.3 performance results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part A
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part B
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-changes-with-the-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What changes with the compiler?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-timer-correction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference timer correction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correctness-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correctness checks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reproduce-the-performance-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproduce the performance measurements
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="assignment-2-measurements">Assignment 2 · Measurements<a class="headerlink" href="#assignment-2-measurements" title="Permanent link">¶</a></h1>
+<h2 id="environment-and-timing">Environment and timing<a class="headerlink" href="#environment-and-timing" title="Permanent link">¶</a></h2>
+<p>Local measurements use Ubuntu 24.04, an Intel Core i9-13900H (14 physical cores,
+20 logical CPUs), eight worker threads, and default CPU scheduling. Both builds
+use the provided Makefile's <code>-O3 -std=c++11</code> flags.</p>
+<p>The reference Linux x86-64 executable records <strong>GCC 9.3.0-17ubuntu1~20.04</strong> in its
+ELF <code>.comment</code> section. The comparison rebuilds the student code with that same
+compiler package and with the system's GCC 13.3.0. Both use the host's shared
+runtime libraries; this is a compiler comparison on the local machine.</p>
+<p>Each reported measurement is the minimum of <strong>three independent program runs</strong>,
+each invoked with <code>-i 1</code>. This uses fewer repetitions than the normal harness,
+which takes the minimum of five runs, each with three internal timing iterations.
+Correctness checks run on every invocation.</p>
+<p>The supplied tests time their launches and synchronization. Pool construction
+and destruction happen outside that region; always-spawn creates its workers
+inside <code>run()</code>, so those launches include thread creation and joining.</p>
+<p>The tables use <code>student time / reference time</code>: smaller is faster. The local
+performance thresholds are <code>&lt; 1.2</code> for Part A and <code>&lt; 1.5</code> for Part B. Part B grades
+only the sleeping pool, including its synchronous <code>run()</code> interface.</p>
+<p>The course grades on an AWS <code>c7g.4xlarge</code> ARM machine. These measurements establish
+local behavior and do not predict that machine's grade.</p>
+<h2 id="gcc-93-performance-results">GCC 9.3 performance results<a class="headerlink" href="#gcc-93-performance-results" title="Permanent link">¶</a></h2>
+<p>All 33 Part A comparisons and all 22 Part B sleeping-pool comparisons met the
+local performance thresholds. Assignment sources were unchanged during the run.</p>
+<h3 id="part-a">Part A<a class="headerlink" href="#part-a" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th style="text-align: right;">Spawn / ref</th>
+<th style="text-align: right;">Spin / ref</th>
+<th style="text-align: right;">Sleep / ref</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Super-super light</td>
+<td style="text-align: right;">1.005</td>
+<td style="text-align: right;">0.966</td>
+<td style="text-align: right;">1.012</td>
+</tr>
+<tr>
+<td>Super light</td>
+<td style="text-align: right;">1.017</td>
+<td style="text-align: right;">1.010</td>
+<td style="text-align: right;">0.898</td>
+</tr>
+<tr>
+<td>Ping-pong equal</td>
+<td style="text-align: right;">0.994</td>
+<td style="text-align: right;">1.016</td>
+<td style="text-align: right;">0.974</td>
+</tr>
+<tr>
+<td>Ping-pong unequal</td>
+<td style="text-align: right;">1.121</td>
+<td style="text-align: right;">1.112</td>
+<td style="text-align: right;">1.058</td>
+</tr>
+<tr>
+<td>Recursive Fibonacci</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.007</td>
+<td style="text-align: right;">0.920</td>
+</tr>
+<tr>
+<td>Math loop</td>
+<td style="text-align: right;">1.026</td>
+<td style="text-align: right;">0.998</td>
+<td style="text-align: right;">1.015</td>
+</tr>
+<tr>
+<td>Math loop, fewer tasks</td>
+<td style="text-align: right;">1.023</td>
+<td style="text-align: right;">1.035</td>
+<td style="text-align: right;">0.982</td>
+</tr>
+<tr>
+<td>Math loop, fan-in</td>
+<td style="text-align: right;">1.001</td>
+<td style="text-align: right;">1.043</td>
+<td style="text-align: right;">1.004</td>
+</tr>
+<tr>
+<td>Math loop, reduction tree</td>
+<td style="text-align: right;">1.022</td>
+<td style="text-align: right;">1.048</td>
+<td style="text-align: right;">1.052</td>
+</tr>
+<tr>
+<td>Spin between calls</td>
+<td style="text-align: right;">0.985</td>
+<td style="text-align: right;">0.913</td>
+<td style="text-align: right;">0.882</td>
+</tr>
+<tr>
+<td>Mandelbrot</td>
+<td style="text-align: right;">1.015</td>
+<td style="text-align: right;">1.017</td>
+<td style="text-align: right;">1.101</td>
+</tr>
+</tbody>
+</table>
+<details class="note">
+<summary>Absolute times (ms): student / reference</summary>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th style="text-align: right;">Spawn</th>
+<th style="text-align: right;">Spin</th>
+<th style="text-align: right;">Sleep</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Super-super light</td>
+<td style="text-align: right;">36.060 / 35.866</td>
+<td style="text-align: right;">9.479 / 9.809</td>
+<td style="text-align: right;">8.343 / 8.243</td>
+</tr>
+<tr>
+<td>Super light</td>
+<td style="text-align: right;">35.890 / 35.295</td>
+<td style="text-align: right;">11.580 / 11.467</td>
+<td style="text-align: right;">9.027 / 10.049</td>
+</tr>
+<tr>
+<td>Ping-pong equal</td>
+<td style="text-align: right;">135.009 / 135.783</td>
+<td style="text-align: right;">104.890 / 103.188</td>
+<td style="text-align: right;">100.627 / 103.298</td>
+</tr>
+<tr>
+<td>Ping-pong unequal</td>
+<td style="text-align: right;">273.276 / 243.800</td>
+<td style="text-align: right;">244.004 / 219.349</td>
+<td style="text-align: right;">259.360 / 245.089</td>
+</tr>
+<tr>
+<td>Recursive Fibonacci</td>
+<td style="text-align: right;">187.023 / 186.978</td>
+<td style="text-align: right;">211.157 / 209.627</td>
+<td style="text-align: right;">205.547 / 223.447</td>
+</tr>
+<tr>
+<td>Math loop</td>
+<td style="text-align: right;">245.550 / 239.265</td>
+<td style="text-align: right;">132.786 / 133.078</td>
+<td style="text-align: right;">116.773 / 115.084</td>
+</tr>
+<tr>
+<td>Math loop, fewer tasks</td>
+<td style="text-align: right;">271.246 / 265.115</td>
+<td style="text-align: right;">137.753 / 133.151</td>
+<td style="text-align: right;">126.133 / 128.388</td>
+</tr>
+<tr>
+<td>Math loop, fan-in</td>
+<td style="text-align: right;">56.945 / 56.860</td>
+<td style="text-align: right;">43.114 / 41.334</td>
+<td style="text-align: right;">45.683 / 45.490</td>
+</tr>
+<tr>
+<td>Math loop, reduction tree</td>
+<td style="text-align: right;">41.822 / 40.905</td>
+<td style="text-align: right;">38.493 / 36.742</td>
+<td style="text-align: right;">46.626 / 44.334</td>
+</tr>
+<tr>
+<td>Spin between calls</td>
+<td style="text-align: right;">179.946 / 182.597</td>
+<td style="text-align: right;">221.682 / 242.861</td>
+<td style="text-align: right;">190.927 / 216.584</td>
+</tr>
+<tr>
+<td>Mandelbrot</td>
+<td style="text-align: right;">38.620 / 38.041</td>
+<td style="text-align: right;">38.158 / 37.519</td>
+<td style="text-align: right;">54.652 / 49.622</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h3 id="part-b">Part B<a class="headerlink" href="#part-b" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th style="text-align: right;"><code>run()</code> / ref</th>
+<th style="text-align: right;">Async / ref</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Super-super light</td>
+<td style="text-align: right;">0.904</td>
+<td style="text-align: right;">0.779</td>
+</tr>
+<tr>
+<td>Super light</td>
+<td style="text-align: right;">0.750</td>
+<td style="text-align: right;">0.713</td>
+</tr>
+<tr>
+<td>Ping-pong equal</td>
+<td style="text-align: right;">0.730</td>
+<td style="text-align: right;">0.677</td>
+</tr>
+<tr>
+<td>Ping-pong unequal</td>
+<td style="text-align: right;">0.737</td>
+<td style="text-align: right;">0.722</td>
+</tr>
+<tr>
+<td>Recursive Fibonacci</td>
+<td style="text-align: right;">0.779</td>
+<td style="text-align: right;">0.764</td>
+</tr>
+<tr>
+<td>Math loop</td>
+<td style="text-align: right;">0.773</td>
+<td style="text-align: right;">0.755</td>
+</tr>
+<tr>
+<td>Math loop, fewer tasks</td>
+<td style="text-align: right;">0.821</td>
+<td style="text-align: right;">0.730</td>
+</tr>
+<tr>
+<td>Math loop, fan-in</td>
+<td style="text-align: right;">0.670</td>
+<td style="text-align: right;">0.799</td>
+</tr>
+<tr>
+<td>Math loop, reduction tree</td>
+<td style="text-align: right;">0.774</td>
+<td style="text-align: right;">0.827</td>
+</tr>
+<tr>
+<td>Spin between calls</td>
+<td style="text-align: right;">0.802</td>
+<td style="text-align: right;">0.820</td>
+</tr>
+<tr>
+<td>Mandelbrot</td>
+<td style="text-align: right;">0.698</td>
+<td style="text-align: right;">0.744</td>
+</tr>
+</tbody>
+</table>
+<details class="note">
+<summary>Absolute times (ms): student / reference</summary>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th style="text-align: right;"><code>run()</code></th>
+<th style="text-align: right;">Async</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Super-super light</td>
+<td style="text-align: right;">10.834 / 11.986</td>
+<td style="text-align: right;">9.036 / 11.607</td>
+</tr>
+<tr>
+<td>Super light</td>
+<td style="text-align: right;">10.491 / 13.981</td>
+<td style="text-align: right;">9.040 / 12.684</td>
+</tr>
+<tr>
+<td>Ping-pong equal</td>
+<td style="text-align: right;">107.344 / 147.019</td>
+<td style="text-align: right;">96.962 / 143.319</td>
+</tr>
+<tr>
+<td>Ping-pong unequal</td>
+<td style="text-align: right;">176.584 / 239.532</td>
+<td style="text-align: right;">172.951 / 239.545</td>
+</tr>
+<tr>
+<td>Recursive Fibonacci</td>
+<td style="text-align: right;">168.355 / 216.136</td>
+<td style="text-align: right;">161.554 / 211.443</td>
+</tr>
+<tr>
+<td>Math loop</td>
+<td style="text-align: right;">93.043 / 120.382</td>
+<td style="text-align: right;">78.524 / 103.943</td>
+</tr>
+<tr>
+<td>Math loop, fewer tasks</td>
+<td style="text-align: right;">104.469 / 127.301</td>
+<td style="text-align: right;">57.602 / 78.927</td>
+</tr>
+<tr>
+<td>Math loop, fan-in</td>
+<td style="text-align: right;">33.626 / 50.184</td>
+<td style="text-align: right;">28.409 / 35.565</td>
+</tr>
+<tr>
+<td>Math loop, reduction tree</td>
+<td style="text-align: right;">35.814 / 46.246</td>
+<td style="text-align: right;">27.940 / 33.771</td>
+</tr>
+<tr>
+<td>Spin between calls</td>
+<td style="text-align: right;">172.251 / 214.807</td>
+<td style="text-align: right;">175.696 / 214.180</td>
+</tr>
+<tr>
+<td>Mandelbrot</td>
+<td style="text-align: right;">37.719 / 54.033</td>
+<td style="text-align: right;">36.523 / 49.058</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p>Across Part B's 22 measurements, student time is lower in every case. The
+median time reduction is <strong>24.0%</strong>, with reductions ranging from <strong>9.6% to 33.0%</strong>.
+Part A is close to the reference: the median ratios for spawn, spin, and sleep
+are 1.015, 1.016, and 1.004, respectively.</p>
+<p>The largest ratio is 1.121 in Part A and 0.904 in Part B. These are ratios to the
+corresponding reference implementation, not speedups over serial execution.</p>
+<h2 id="what-changes-with-the-compiler">What changes with the compiler?<a class="headerlink" href="#what-changes-with-the-compiler" title="Permanent link">¶</a></h2>
+<p>Times below are milliseconds for the same Part B source and eight-worker setup:</p>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th style="text-align: right;">Serial, GCC 9.3</th>
+<th style="text-align: right;">Serial, GCC 13.3</th>
+<th style="text-align: right;">Sleep, GCC 9.3</th>
+<th style="text-align: right;">Sleep, GCC 13.3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recursive Fibonacci</td>
+<td style="text-align: right;">925.630</td>
+<td style="text-align: right;">587.485</td>
+<td style="text-align: right;">168.355</td>
+<td style="text-align: right;">105.484</td>
+</tr>
+<tr>
+<td>Math loop</td>
+<td style="text-align: right;">364.253</td>
+<td style="text-align: right;">345.025</td>
+<td style="text-align: right;">93.043</td>
+<td style="text-align: right;">94.005</td>
+</tr>
+<tr>
+<td>Spin between calls</td>
+<td style="text-align: right;">335.818</td>
+<td style="text-align: right;">207.626</td>
+<td style="text-align: right;">172.251</td>
+<td style="text-align: right;">104.566</td>
+</tr>
+</tbody>
+</table>
+<p><code>spin_between_run_calls</code> launches two <code>fib(40)</code> tasks between two light launches.
+Its useful work changes substantially with compiler-generated Fibonacci code.
+Switching from GCC 9.3 to GCC 13.3 improves serial time by <strong>1.62×</strong> and sleeping-pool
+time by <strong>1.65×</strong>. The pool's speedup over its own serial build stays close to two:
+<strong>1.95×</strong> with GCC 9.3 and <strong>1.99×</strong> with GCC 13.3.</p>
+<p>The corrected reference sleeping-pool time is 214.807 ms. Comparing GCC 13 to this
+GCC 9 reference gives a ratio of 0.487; using GCC 9 for both gives 0.802. A large
+part of that apparent advantage comes from the compiler, while the older build
+still passes comfortably. The math-loop times change much less.</p>
+<p><a href="../../assets/benchmarks/a2-results.json">Complete samples and source hashes</a> ·
+<a href="../../assets/benchmarks/a2-toolchain.json">Compiler package versions and hashes</a></p>
+<h2 id="reference-timer-correction">Reference timer correction<a class="headerlink" href="#reference-timer-correction" title="Permanent link">¶</a></h2>
+<p>The current source uses <code>std::chrono::steady_clock</code>. The supplied Linux x86-64
+reference binary instead converts TSC ticks using a sampled CPU MHz value.
+On this machine that conversion can disagree with the constant-rate TSC.</p>
+<p><code>tests/reference_timer.py</code> measures seconds per TSC tick against
+<code>CLOCK_MONOTONIC</code>, using the median of five 100 ms samples. It reads the conversion
+factor from its own reference child process and applies:</p>
+<div class="language-text highlight"><pre><span></span><code>corrected reference milliseconds
+    = reported milliseconds
+    × measured seconds per TSC tick / reference seconds per TSC tick
+</code></pre></div>
+<p>The binary and its workload remain unchanged. The correction applies to its
+reported times; process startup and shutdown are not substituted for the timed
+region. The saved results include each correction factor.</p>
+<h2 id="correctness-checks">Correctness checks<a class="headerlink" href="#correctness-checks" title="Permanent link">¶</a></h2>
+<p>The supplied <code>simple_test_sync</code>, <code>simple_test_async</code>, <code>strict_diamond_deps_async</code>,
+and <code>strict_graph_deps_large_async</code> passed with one and eight workers in the
+current GCC 13 build.</p>
+<p>The standalone <a href="../../assets/benchmarks/a2_checks.cpp">additional check</a> exercises
+the sleeping pool with one, two, and eight workers:</p>
+<ul>
+<li>300 short <code>A → B</code> chains per worker count. A delays briefly so B is likely to
+  be submitted before A finishes.</li>
+<li>50 graphs of 48 launches per worker count, with 1–7 tasks per launch. Each graph
+  includes a chain and additional randomly selected predecessor edges.</li>
+<li>Every task ID must execute exactly once, each successor checks its predecessors'
+  completed counts, and <code>sync()</code> must return with every task finished.</li>
+<li>Repeated <code>sync()</code> calls and 30 idle pool construction/destruction cycles.</li>
+</ul>
+<p>All checks passed with libstdc++ debug iterators under both GCC 9.3 and GCC 13.3.
+They exercise the <a href="../part-b/#3-follow-one-graph-through-the-lists">queue transitions</a>
+and repeated use of the worker pool.</p>
+<p>From the repository root:</p>
+<div class="language-sh highlight"><pre><span></span><code>g++<span class="w"> </span>-O1<span class="w"> </span>-g<span class="w"> </span>-D_GLIBCXX_DEBUG<span class="w"> </span>-std<span class="o">=</span>c++11<span class="w"> </span>-pthread<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-Iasst2/part_b<span class="w"> </span>docs/assets/benchmarks/a2_checks.cpp<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>asst2/part_b/tasksys.cpp<span class="w"> </span>-o<span class="w"> </span>/tmp/a2-checks
+timeout<span class="w"> </span>30s<span class="w"> </span>/tmp/a2-checks
+</code></pre></div>
+<h2 id="reproduce-the-performance-measurements">Reproduce the performance measurements<a class="headerlink" href="#reproduce-the-performance-measurements" title="Permanent link">¶</a></h2>
+<p>The <a href="../../assets/benchmarks/benchmark_a2.py">measurement script</a> builds in temporary
+copies. Supply a working GCC 9.3.0 compiler and choose a new output directory:</p>
+<div class="language-sh highlight"><pre><span></span><code>python3<span class="w"> </span>docs/assets/benchmarks/benchmark_a2.py<span class="w"> </span>.<span class="w"> </span>/tmp/a2-measurements<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--cxx9<span class="w"> </span>/path/to/g++-9<span class="w"> </span>-n<span class="w"> </span><span class="m">8</span><span class="w"> </span>--rounds<span class="w"> </span><span class="m">3</span><span class="w"> </span>--iterations<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+<p>Use <code>--rounds 5 --iterations 3</code> for the normal harness's repetition counts. The
+script records source hashes, compiler versions, raw timings, and corrected
+reference timings. An extracted compiler may also need its library directory in
+<code>LD_LIBRARY_PATH</code>.</p>
+<p>For the usual grading report, build the selected part and run the harness from
+that directory:</p>
+<div class="language-sh highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>asst2/part_b
+make
+python3<span class="w"> </span>../tests/run_test_harness.py<span class="w"> </span>-n<span class="w"> </span><span class="m">8</span><span class="w"> </span>-a
+</code></pre></div>
+<p>For Part A, run the same commands from <code>asst2/part_a</code> and omit <code>-a</code>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+  <footer class="notes-footer md-grid">
+    <nav aria-label="Notes navigation">
+      <a href="../..">All notes</a>
+      <a href="../part-b/">Previous: Part B · Task graphs</a>
+      <a href="../../asst3/">Next: A3 · CUDA renderer</a>
+      <a href="https://github.com/LeeXSean/parlab">Source</a>
+    </nav>
+    © 2026 Xiang Li
+  </footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.sections", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

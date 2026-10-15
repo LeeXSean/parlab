@@ -86,6 +86,7 @@
 .md-typeset table:not([class]) { font-size: 0.75rem; border: 0; border-collapse: collapse; }
 .md-typeset table:not([class]) :is(th, td) { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--line); }
 .md-typeset table:not([class]) th { min-width: 0; background: none; }
+.md-typeset table:not([class]) td:first-child code { white-space: nowrap; }
 .md-typeset hr { margin: 1.5rem 0; border-bottom: 1px solid var(--line); }
 .md-typeset mjx-container { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
 .article-meta, .lab-meta { color: var(--muted); font-size: 0.7rem; }
@@ -102,6 +103,10 @@
 @media (min-width: 60em) {
   .md-sidebar { width: 10rem; }
   .md-nav--primary > .md-nav__title { display: none; }
+}
+@media (min-width: 76.25em) {
+  .md-sidebar { width: 8.5rem; }
+  .md-content { max-width: 47rem; }
 }
 @media (max-width: 59.984375em) {
   .md-header .md-logo { font-size: 0.75rem; white-space: nowrap; padding: 0.2rem; }
