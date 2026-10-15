@@ -18,7 +18,7 @@ Threads, SIMD intrinsics, ISPC tasks, memory bandwidth, and K-means.
 
 ### [A2 · Task system](asst2/index.md)
 
-<span class="lab-meta">CS149 · Implemented</span>
+<span class="lab-meta">CS149 · Completed</span>
 
 Thread pools, synchronous task launch, and dependency scheduling.
 

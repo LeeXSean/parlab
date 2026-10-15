@@ -4,7 +4,7 @@ title: A2 · Task system
 
 # Assignment 2 · Task system
 
-<span class="lab-meta">CS149 · Implemented</span>
+<span class="lab-meta">CS149 · Completed</span>
 
 The implementation develops from one shared launch into a scheduler for a graph
 of launches. Workers claim work under a mutex, run the callback without it, and
